@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.algaworks.algafood.api.DTO.HotelOutput;
+import com.algaworks.algafood.api.assembler.HotelIMapper;
 import com.algaworks.algafood.domain.model.Hotel;
 import com.algaworks.algafood.domain.service.HotelService;
 
@@ -20,14 +22,22 @@ public class HotelController {
 	@Autowired
 	private HotelService hotelService;
 	
+	@Autowired
+	private HotelIMapper hotelMapper;
+	
 	@GetMapping()
-	public List<Hotel> findAll() {
+	public List<HotelOutput> findAll() {
+		return hotelMapper.ToCollectionInputModel(hotelService.findAll()); 	
+	}
+	
+	@GetMapping(value = "/h")
+	public List<Hotel>find() {
 		return hotelService.findAll(); 	
 	}
 	
 	@GetMapping(value = "/{hotelId}")
-	public Hotel findOne(@PathVariable Long hotelId) {
-		return hotelService.findOne(hotelId); 	
+	public HotelOutput findOne(@PathVariable Long hotelId) {
+		return hotelMapper.ToOutputModel(hotelService.findOne(hotelId)); 	
 	}
 	
 	@PostMapping()

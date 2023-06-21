@@ -1,10 +1,10 @@
 package com.algaworks.algafood.domain.exception;
 
-public class HotelNotFound extends BusinessException {
+public class HotelNotFoundException extends BusinessException {
 
 	private static final long serialVersionUID = 1L;
 
-	public HotelNotFound(String message) {
+	public HotelNotFoundException(String message) {
 		super(message);
 	}
 }

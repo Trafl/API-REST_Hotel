@@ -1,7 +1,6 @@
 package com.algaworks.algafood.domain.model;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
+import jakarta.persistence.Embeddable;
 
 import lombok.Data;
 
@@ -9,18 +8,13 @@ import lombok.Data;
 @Embeddable
 public class Address {
 	
-	@Column(name = "cep")
 	private String cep;
 	
-	@Column(name = "numero")
-	private String number;
+	private String numero;
 
-	@Column(name = "complemento")
-	private String complement;
+	private String complemento;
 
-	@Column(name = "bairro")
-	private String neighborhood;
+	private String bairro;
 	
-	@Column(name = "cidade")
-	private String city;
+	private String cidade;
 }

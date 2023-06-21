@@ -3,12 +3,12 @@ package com.algaworks.algafood.domain.model;
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -27,20 +27,18 @@ public class Room {
 	
 	private Integer code;
 	
-	@Column(name = "diaria")
-	private BigDecimal daily;
-	
-	@Column(name = "descricao")
-	private String description;
+	private BigDecimal diaria;
+
+	private String descricao;
 	
 	@CreationTimestamp
 	private OffsetDateTime checkIn;
 	
 	private OffsetDateTime checkOut;
 	
-	@Column(name = "disponivel")
-	private Boolean available= true;
+	private Boolean disponivel= true;
 	
 	@ManyToOne()
+	@JoinColumn(name = "hotel_id")
 	private Hotel hotel;
 }

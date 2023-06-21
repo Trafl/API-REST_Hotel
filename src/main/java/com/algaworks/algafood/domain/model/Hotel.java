@@ -1,16 +1,14 @@
 package com.algaworks.algafood.domain.model;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-
+import jakarta.persistence.Embedded;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -24,18 +22,16 @@ public class Hotel {
 	@EqualsAndHashCode.Include
 	private Long id;
 
-	@Column(name = "nome")
-	private String name;
+	private String nome;
 
-	@Column(name = "descricao")
-	private String description;
+	private String descricao;
 	
 	@Embedded
-	private Address address; //Podendo integrar com uma API de Localização 
+	private Address endereco; //Podendo integrar com uma API de Localização 
 	
+
 	@OneToMany(mappedBy = "hotel")
-	@Column(name = "quartos")
-	private Set<Room> room = new HashSet<>(); 
+	private List<Room> quartos = new ArrayList<>(); 
 	
 /* Atributos pendentes, Avaliação dos clientes, Classificação */
 	
