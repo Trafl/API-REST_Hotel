@@ -10,7 +10,7 @@ insert into room (code, diaria, descricao, disponivel, hotel_id)
     values (1, 152.00, 'Bem arejado de frente ao mar', true, 1);
 
 insert into room (code, diaria, descricao, disponivel, hotel_id) 
-    values (2, 332.00, 'Bem arejado de frente ao mar', true, 1);
+    values (2, 332.00, 'Bem arejado de frente ao mar', true, 1); 
 
 insert into room (code, diaria, descricao, disponivel, hotel_id) 
     values (3, 552.00, 'suite presidencial', true, 2);    

@@ -7,4 +7,8 @@ public class HotelNotFoundException extends BusinessException {
 	public HotelNotFoundException(String message) {
 		super(message);
 	}
+	
+	public HotelNotFoundException(Long hotelId) {
+		super(String.format("Hotel de codigo %s não encontado nos registros.", hotelId));
+	}
 }

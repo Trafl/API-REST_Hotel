@@ -3,7 +3,6 @@ package com.algaworks.algafood.api.DTO;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,5 +18,5 @@ public class HotelInput {
 	
 	@Valid
 	@NotNull
-	private AddressInput endereço;
+	private AddressInput endereco;
 }

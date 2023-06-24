@@ -14,13 +14,13 @@ public class AddressInput {
 	private String cep;
 	
 	@NotBlank
-	private String number;
+	private String numero;
 
-	private String complement;
+	private String complemento;
 	
 	@NotBlank
-	private String neighborhood;
+	private String bairro;
 	
 	@NotBlank
-	private String city;
+	private String cidade;
 }

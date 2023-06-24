@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.algaworks.algafood.domain.exception.HotelNotFoundException;
 import com.algaworks.algafood.domain.model.Hotel;
@@ -21,6 +22,13 @@ public class HotelService {
 	
 	public Hotel findOne(Long hotelId) {
 		return hotelRepository.findById(hotelId).orElseThrow(
-				()-> new HotelNotFoundException("Hotel não encontado nos registros."));
+				()-> new HotelNotFoundException(hotelId));
 	}
+
+	@Transactional
+	public Hotel add(Hotel hotel) {
+		return hotelRepository.save(hotel);
+	}
+
 }
+

@@ -7,4 +7,7 @@ public class RoomNotFoundException extends BusinessException {
 	public RoomNotFoundException(String message) {
 		super(message);
 	}
+	public RoomNotFoundException(Long roomId) {
+		super(String.format("Quarto de codigo %s não foi encontado nos registros.", roomId));
+	}
 }

@@ -24,15 +24,13 @@ public class Hotel_RoomController {
 	@Autowired RoomIMapper roomMapper;
 	
 	@GetMapping()
-	public List<RoomOutput> findAll(@PathVariable Long hotelId) {
+	public List<RoomOutput> findRoomsOfHotel(@PathVariable Long hotelId) {
 		Hotel hotel = hotelService.findOne(hotelId);
 		return roomMapper.ToCollectionOuputModel(hotel.getQuartos());
 	}
 
 	@GetMapping(value = "/{roomId}")
 	public Room findOne(@PathVariable Long hotelId ,@PathVariable Long roomId) {
-		
-		return null;	
-	
+		return null;
 	}
 }  

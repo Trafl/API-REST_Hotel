@@ -36,9 +36,6 @@ public class RoomService {
 	
 	public Room findOne(Long roomId) {
 		return roomRepository.findById(roomId).orElseThrow(
-				()-> new RoomNotFoundException("Quarto não encontado nos registros."));
+				()-> new RoomNotFoundException(roomId));
 	}
-	
-	
-	
 }

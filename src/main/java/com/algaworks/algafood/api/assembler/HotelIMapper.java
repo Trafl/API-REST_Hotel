@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.algaworks.algafood.api.DTO.HotelInput;
+import com.algaworks.algafood.api.DTO.HotelOneOutput;
 import com.algaworks.algafood.api.DTO.HotelOutput;
 import com.algaworks.algafood.domain.model.Hotel;
 
@@ -26,8 +27,13 @@ public class HotelIMapper {
 		return list.stream().map((models) -> ToDomainModel(models)).collect(Collectors.toList());
 	}
 
+	//---------------------------------------------------------
 	public HotelOutput ToOutputModel(Hotel hotel) {
 		return modelMapper.map(hotel, HotelOutput.class);
+	}
+	
+	public HotelOneOutput ToOneOutputModel(Hotel hotel) {
+		return modelMapper.map(hotel, HotelOneOutput.class);
 	}
 	
 	public List<HotelOutput> ToCollectionInputModel (Collection<Hotel> list){
