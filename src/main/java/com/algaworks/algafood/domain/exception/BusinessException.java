@@ -8,4 +8,8 @@ public class BusinessException extends RuntimeException {
 		super(mensagem);
 	}
 	
+	public BusinessException(String mensagem, Throwable causa ) {
+		super(mensagem, causa);
+	}
+	
 }

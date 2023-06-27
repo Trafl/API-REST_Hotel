@@ -39,6 +39,11 @@ public class HotelIMapper {
 	public List<HotelOutput> ToCollectionInputModel (Collection<Hotel> list){
 		return list.stream().map((modesl)-> ToOutputModel(modesl)).collect(Collectors.toList());
 	}
+	
+	//----------------------------------------------------------
+	public void CopyToDomain(HotelInput hotelInput, Hotel hotel) {	 
+		modelMapper.map(hotelInput,hotel);
+	}
 }
 	
 

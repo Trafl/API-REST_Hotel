@@ -38,4 +38,9 @@ public class RoomService {
 		return roomRepository.findById(roomId).orElseThrow(
 				()-> new RoomNotFoundException(roomId));
 	}
+	
+	@Transactional
+	public void delete (Long roomId) {
+		roomRepository.deleteById(roomId);
+	}
 }

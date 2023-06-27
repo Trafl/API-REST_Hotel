@@ -41,4 +41,12 @@ public class Room {
 	@ManyToOne()
 	@JoinColumn(name = "hotel_id")
 	private Hotel hotel;
+	
+	public void toHire() {
+		setDisponivel(false);
+	}
+	
+	public void toAvailable() {
+		setDisponivel(true);
+	}
 }
