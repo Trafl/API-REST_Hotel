@@ -10,7 +10,8 @@ public enum ProblemType {
 	ROOM_HOTEL_NOT_FOUND("Quarto não registrado nesse hotel"),
 	ENTITY_IN_USE("Entidade em uso."),
 	BUSINESS("Violação de regra de negócio"),
-	UNREADABLE_MESSAGE("Mensagem incompreensível.");
+	UNREADABLE_MESSAGE("Mensagem incompreensível."),
+	INVALID_DATA("Dados invalidos.");
 
 	private String title;
 	

@@ -1,12 +1,18 @@
 package com.algaworks.algafood.api.exceptionhandler;
 
 import java.time.OffsetDateTime;
+import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
@@ -26,6 +32,12 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 	protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex,
 			HttpHeaders headers, HttpStatusCode status, WebRequest request) {
 		
+		Throwable rootCause = ex.getRootCause();
+		
+		if(rootCause instanceof BindingResult) {
+			return handleMethodArgumentNotValid((MethodArgumentNotValidException) rootCause, headers, status, request);
+		}
+		
 		ProblemType problemType = ProblemType.UNREADABLE_MESSAGE;
 		String detail = "O corpo da requisição está invalido. Verifique erro de sintaxe";
 		
@@ -34,6 +46,33 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 		return handleExceptionInternal(ex, body, new HttpHeaders(), status, request);
 		
 	}
+	
+	@Autowired
+	private MessageSource messageSource;
+	
+	@Override
+	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
+			HttpHeaders headers, HttpStatusCode status, WebRequest request) {
+			
+		ProblemType problemType = ProblemType.INVALID_DATA;
+		String detail = "Erro ao validar os campos informados no corpo da resposta.";
+		
+		BindingResult bindResult = ex.getBindingResult();
+			
+		List<Problem.Field> problemFields = bindResult.getFieldErrors().stream()
+				.map(fieldErro ->{ 
+					String message = messageSource.getMessage(fieldErro, LocaleContextHolder.getLocale());
+					
+					return Problem.Field.builder()
+						.name(fieldErro.getField())
+						.userMessage(message)
+						.build();
+		}).toList();
+		
+		Problem body = createProblemBuilder(status, problemType, detail).fields(problemFields).build();
+		
+		return handleExceptionInternal(ex, body, new HttpHeaders(), status, request);
+		}
 /////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	@ExceptionHandler(BusinessException.class)
@@ -45,7 +84,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 		
 		Problem body = createProblemBuilder(status, problemType, detail).build();
 		
-		return handleExceptionInternal(ex, body, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+		return handleExceptionInternal(ex, body, new HttpHeaders(), status, request);
 	}
 	
 	
@@ -97,7 +136,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 		
 		return handleExceptionInternal(ex, body, new HttpHeaders(), status, request);
 	} 
-	
+////////////////////////////////////////////////////////////////////////////////////////////	
 	@Override
 	protected ResponseEntity<Object> handleExceptionInternal(Exception ex, Object body, HttpHeaders headers,
 			HttpStatusCode statusCode, WebRequest request) {
