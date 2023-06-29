@@ -35,28 +35,28 @@ public class HotelController {
 	
 	@GetMapping()
 	public List<HotelOutput> findAll() {
-		return hotelMapper.ToCollectionInputModel(hotelService.findAll()); 	
+		return hotelMapper.toCollectionInputModel(hotelService.findAll()); 	
 	}
 	
 	@GetMapping(value = "/{hotelId}")
 	public HotelOneOutput findOne(@PathVariable Long hotelId) {
-		return hotelMapper.ToOneOutputModel(hotelService.findOne(hotelId)); 	
+		return hotelMapper.toOneOutputModel(hotelService.findOne(hotelId)); 	
 	}
 	
 	@PostMapping()
 	@ResponseStatus(HttpStatus.CREATED)
-	public HotelOutput Add(@RequestBody @Valid HotelInput hotelInput) {
-		Hotel hotel = hotelMapper.ToDomainModel(hotelInput);
-		return  hotelMapper.ToOutputModel(hotelService.add(hotel));
+	public HotelOutput add(@RequestBody @Valid HotelInput hotelInput) {
+		Hotel hotel = hotelMapper.toDomainModel(hotelInput);
+		return  hotelMapper.toOutputModel(hotelService.add(hotel));
 	}
 	
 	@PutMapping(value = "/{hotelId}")
-	public HotelOutput Update(@RequestBody @Valid HotelInput hotelInput, @PathVariable Long hotelId) {	
+	public HotelOutput update(@RequestBody @Valid HotelInput hotelInput, @PathVariable Long hotelId) {	
 		Hotel hotel = hotelService.findOne(hotelId);
-		hotelMapper.CopyToDomain(hotelInput, hotel);
+		hotelMapper.copyToDomain(hotelInput, hotel);
 		hotelService.add(hotel);
 		
-		return hotelMapper.ToOutputModel(hotel);
+		return hotelMapper.toOutputModel(hotel);
 	}
 	
 	

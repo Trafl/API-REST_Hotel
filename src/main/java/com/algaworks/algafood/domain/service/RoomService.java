@@ -3,9 +3,11 @@ package com.algaworks.algafood.domain.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.algaworks.algafood.domain.exception.EntityInUseException;
 import com.algaworks.algafood.domain.exception.RoomNotFoundException;
 import com.algaworks.algafood.domain.model.Hotel;
 import com.algaworks.algafood.domain.model.Room;
@@ -41,6 +43,13 @@ public class RoomService {
 	
 	@Transactional
 	public void delete (Long roomId) {
-		roomRepository.deleteById(roomId);
+		try {
+			findOne(roomId);
+			roomRepository.deleteById(roomId);
+			roomRepository.flush();
+		}
+		catch(DataIntegrityViolationException e) {
+			throw new EntityInUseException(String.format("Hotel de codigo %s não pode ser deletado pois esta em uso", roomId));
+		}			
 	}
 }

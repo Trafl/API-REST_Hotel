@@ -18,21 +18,21 @@ public class RoomIMapper {
 	@Autowired
 	private ModelMapper modelMapper;
 	
-	public Room ToDomainModel(RoomInput roomInput) {
+	public Room toDomainModel(RoomInput roomInput) {
 		return modelMapper.map(roomInput, Room.class);
 	}
 	
-	public List<Room> ToCollectionModel(Collection<RoomInput> list) {
-		return list.stream().map((models) -> ToDomainModel(models)).collect(Collectors.toList());
+	public List<Room> toCollectionModel(Collection<RoomInput> list) {
+		return list.stream().map((models) -> toDomainModel(models)).collect(Collectors.toList());
 	}
 
 	//--------------------------------------------------------------------
-	public RoomOutput ToOutputModel(Room room) {
+	public RoomOutput toOutputModel(Room room) {
 		return modelMapper.map(room, RoomOutput.class);
 	}
 	
-	public List<RoomOutput> ToCollectionOuputModel (Collection<Room> list){
-		return list.stream().map((modesl)-> ToOutputModel(modesl)).collect(Collectors.toList());
+	public List<RoomOutput> toCollectionOuputModel (Collection<Room> list){
+		return list.stream().map((modesl)-> toOutputModel(modesl)).collect(Collectors.toList());
 	}
 }
 	

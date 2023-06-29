@@ -33,20 +33,20 @@ public class RoomController {
 	
 	@GetMapping()
 	public List<RoomOutput> findAll() {
-		return roomMapper.ToCollectionOuputModel(roomService.findAll()); 	
+		return roomMapper.toCollectionOuputModel(roomService.findAll()); 	
 	}
 	
 	@GetMapping(value = "/{roomId}")
 	public RoomOutput findOne(@PathVariable Long roomId) {
-		return roomMapper.ToOutputModel(roomService.findOne(roomId)); 	
+		return roomMapper.toOutputModel(roomService.findOne(roomId)); 	
 	}
 	
 	@PostMapping()
 	@ResponseStatus(HttpStatus.CREATED)
-	public RoomOutput Add(@RequestBody @Valid RoomInput roomInput) {
-		Room room = roomMapper.ToDomainModel(roomInput);
+	public RoomOutput add(@RequestBody @Valid RoomInput roomInput) {
+		Room room = roomMapper.toDomainModel(roomInput);
 		room = roomService.add(room);
-		return roomMapper.ToOutputModel(room);
+		return roomMapper.toOutputModel(room);
 	}
 	
 	@DeleteMapping(value = "/{roomId}")

@@ -19,29 +19,29 @@ public class HotelIMapper {
 	@Autowired
 	private ModelMapper modelMapper;
 	
-	public Hotel ToDomainModel(HotelInput hotelInput) {
+	public Hotel toDomainModel(HotelInput hotelInput) {
 		return modelMapper.map(hotelInput, Hotel.class);
 	}
 	
-	public List<Hotel> ToCollectionModel(List<HotelInput> list) {
-		return list.stream().map((models) -> ToDomainModel(models)).collect(Collectors.toList());
+	public List<Hotel> toCollectionModel(List<HotelInput> list) {
+		return list.stream().map((models) -> toDomainModel(models)).collect(Collectors.toList());
 	}
 
 	//---------------------------------------------------------
-	public HotelOutput ToOutputModel(Hotel hotel) {
+	public HotelOutput toOutputModel(Hotel hotel) {
 		return modelMapper.map(hotel, HotelOutput.class);
 	}
 	
-	public HotelOneOutput ToOneOutputModel(Hotel hotel) {
+	public HotelOneOutput toOneOutputModel(Hotel hotel) {
 		return modelMapper.map(hotel, HotelOneOutput.class);
 	}
 	
-	public List<HotelOutput> ToCollectionInputModel (Collection<Hotel> list){
-		return list.stream().map((modesl)-> ToOutputModel(modesl)).collect(Collectors.toList());
+	public List<HotelOutput> toCollectionInputModel (Collection<Hotel> list){
+		return list.stream().map((modesl)-> toOutputModel(modesl)).collect(Collectors.toList());
 	}
 	
 	//----------------------------------------------------------
-	public void CopyToDomain(HotelInput hotelInput, Hotel hotel) {	 
+	public void copyToDomain(HotelInput hotelInput, Hotel hotel) {	 
 		modelMapper.map(hotelInput,hotel);
 	}
 }

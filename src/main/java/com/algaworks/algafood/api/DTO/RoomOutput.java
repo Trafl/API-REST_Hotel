@@ -17,5 +17,5 @@ public class RoomOutput {
 	
 	private Boolean disponivel= true;
 	
-	private Hotel_outputId hotel;
+	private HotelOutputId hotel;
 }

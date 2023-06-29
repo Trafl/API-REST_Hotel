@@ -24,5 +24,5 @@ public class RoomInput {
 	
 	@NotNull
 	@Valid
-	private Hotel_inputId hotel;
+	private HotelInputId hotel;
 }

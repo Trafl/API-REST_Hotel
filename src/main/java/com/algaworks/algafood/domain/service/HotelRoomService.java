@@ -19,7 +19,7 @@ public class HotelRoomService {
 	@Autowired
 	RoomRepository roomRepository;
 	
-	public List<Room> FindAvailableRoom(Long hotelId){
+	public List<Room> findAvailableRoom(Long hotelId){
 		List<Room> listOfRooms = hotelService.findOne(hotelId).getQuartos();
 		List<Room> availableRooms = listOfRooms.stream().filter(t -> t.getDisponivel().equals(true)).toList();
 		
@@ -27,7 +27,7 @@ public class HotelRoomService {
 	}
 	
 	@Transactional
-	public void RentRoom(Long hotelId, Long roomId) {
+	public void rentRoom(Long hotelId, Long roomId) {
 		Room rentRoom = findOneRoomFromHotel(hotelId, roomId);
 		rentRoom.toHire();
 	}

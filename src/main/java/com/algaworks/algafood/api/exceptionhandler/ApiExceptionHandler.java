@@ -76,7 +76,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 /////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	@ExceptionHandler(BusinessException.class)
-	public ResponseEntity<?> BusinessExceptionHandler(BusinessException ex, WebRequest request){
+	public ResponseEntity<?> businessExceptionHandler(BusinessException ex, WebRequest request){
 		
 		HttpStatus status = HttpStatus.BAD_REQUEST;
 		ProblemType problemType = ProblemType.BUSINESS;
@@ -89,7 +89,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 	
 	
 	@ExceptionHandler(EntityInUseException.class)
-	public ResponseEntity<?> EntityInUseExceptionHandler(EntityInUseException ex, WebRequest request){
+	public ResponseEntity<?> entityInUseExceptionHandler(EntityInUseException ex, WebRequest request){
 		
 		HttpStatus status = HttpStatus.CONFLICT;
 		ProblemType problemType = ProblemType.ENTITY_IN_USE;
@@ -101,7 +101,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 	}
 	
 	@ExceptionHandler(HotelNotFoundException.class)
-	public ResponseEntity<?> HotelNotFoundExceptionHandler(HotelNotFoundException ex, WebRequest request){
+	public ResponseEntity<?> hotelNotFoundExceptionHandler(HotelNotFoundException ex, WebRequest request){
 		
 		HttpStatus status = HttpStatus.NOT_FOUND;
 		ProblemType problemType = ProblemType.HOTEL_NOT_FOUND;
@@ -114,7 +114,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 	
 	
 	@ExceptionHandler(RoomNotFoundException.class)
-	public ResponseEntity<?> RoomNotFoundExceptionHandler(RoomNotFoundException ex, WebRequest request){
+	public ResponseEntity<?> roomNotFoundExceptionHandler(RoomNotFoundException ex, WebRequest request){
 		
 		HttpStatus status = HttpStatus.NOT_FOUND;
 		ProblemType problemType = ProblemType.ROOM_NOT_FOUND;
@@ -126,7 +126,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 	} 
 	
 	@ExceptionHandler(RoomFromHotelNotFoundException.class)
-	public ResponseEntity<?> RoomFromHotelNotFoundExceptionHandler(RoomFromHotelNotFoundException ex, WebRequest request){
+	public ResponseEntity<?> roomFromHotelNotFoundExceptionHandler(RoomFromHotelNotFoundException ex, WebRequest request){
 		
 		HttpStatus status = HttpStatus.NOT_FOUND;
 		ProblemType problemType = ProblemType.ROOM_HOTEL_NOT_FOUND;

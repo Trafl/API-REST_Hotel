@@ -19,7 +19,7 @@ import com.algaworks.algafood.domain.service.HotelRoomService;
 
 @RestController
 @RequestMapping(value = "hotel/{hotelId}/quarto")
-public class Hotel_RoomController {
+public class HotelRoomController {
 
 	@Autowired
 	private HotelRoomService hotelRoomService;
@@ -29,25 +29,25 @@ public class Hotel_RoomController {
 	
 	@GetMapping()
 	public List<RoomOutput> findRoomsOfHotel(@PathVariable Long hotelId) {
-		List<Room> trueList = hotelRoomService.FindAvailableRoom(hotelId);
+		List<Room> trueList = hotelRoomService.findAvailableRoom(hotelId);
 		
-		return roomMapper.ToCollectionOuputModel(trueList);
+		return roomMapper.toCollectionOuputModel(trueList);
 	}
 
 	@GetMapping(value = "/{roomId}")
-	public RoomOutput FindOneRoomOfHotel(@PathVariable Long hotelId ,@PathVariable Long roomId) {
-		return roomMapper.ToOutputModel(hotelRoomService.findOneRoomFromHotel(hotelId, roomId));
+	public RoomOutput findOneRoomOfHotel(@PathVariable Long hotelId ,@PathVariable Long roomId) {
+		return roomMapper.toOutputModel(hotelRoomService.findOneRoomFromHotel(hotelId, roomId));
 	}
 	
 	@PutMapping(value = "/{roomId}")
 	@ResponseStatus(HttpStatus.OK)
-	public void AvailableRoom(@PathVariable Long hotelId ,@PathVariable Long roomId) {
+	public void availableRoom(@PathVariable Long hotelId ,@PathVariable Long roomId) {
 		hotelRoomService.availableRoom(hotelId, roomId);
 	}
 	
 	@DeleteMapping(value = "/{roomId}")
 	@ResponseStatus(HttpStatus.OK)
-	public void RentRoom(@PathVariable Long hotelId ,@PathVariable Long roomId) {
-		 hotelRoomService.RentRoom(hotelId, roomId);
+	public void rentRoom(@PathVariable Long hotelId ,@PathVariable Long roomId) {
+		 hotelRoomService.rentRoom(hotelId, roomId);
 	}
 }  
