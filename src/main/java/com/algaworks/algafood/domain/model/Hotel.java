@@ -22,6 +22,7 @@ public class Hotel {
 	@EqualsAndHashCode.Include
 	private Long id;
 
+	
 	private String nome;
 
 	private String descricao;

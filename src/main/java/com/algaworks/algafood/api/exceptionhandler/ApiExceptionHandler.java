@@ -31,12 +31,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 	@Override
 	protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex,
 			HttpHeaders headers, HttpStatusCode status, WebRequest request) {
-		
-		Throwable rootCause = ex.getRootCause();
-		
-		if(rootCause instanceof BindingResult) {
-			return handleMethodArgumentNotValid((MethodArgumentNotValidException) rootCause, headers, status, request);
-		}
+
 		
 		ProblemType problemType = ProblemType.UNREADABLE_MESSAGE;
 		String detail = "O corpo da requisição está invalido. Verifique erro de sintaxe";
