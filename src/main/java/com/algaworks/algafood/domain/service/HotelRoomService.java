@@ -19,9 +19,14 @@ public class HotelRoomService {
 	@Autowired
 	RoomRepository roomRepository;
 	
+	public List<Room> findRooms(Long hotelId){
+		List<Room> listOfRooms = hotelService.findOne(hotelId).getQuartos();
+		return listOfRooms;
+	}
+	
 	public List<Room> findAvailableRoom(Long hotelId){
 		List<Room> listOfRooms = hotelService.findOne(hotelId).getQuartos();
-		List<Room> availableRooms = listOfRooms.stream().filter(t -> t.getDisponivel().equals(true)).toList();
+		List<Room> availableRooms = listOfRooms.stream().filter(room -> room.getDisponivel().equals(true)).toList();
 		
 		return availableRooms;
 	}

@@ -71,18 +71,9 @@
 		  <version>3.0.0</version>
 		</dependency>
 		<dependency>
-		  <groupId>org.apache.commons</groupId>
-		  <artifactId>commons-lang3</artifactId>
-		</dependency>
-		<dependency>
 		    <groupId>io.rest-assured</groupId>
 		    <artifactId>rest-assured</artifactId>
 		    <scope>test</scope>
-		</dependency>
-		<dependency>
-		    <groupId>org.codehaus.mojo</groupId>
-		    <artifactId>dbunit-maven-plugin</artifactId>
-		    <version>1.0-beta-3</version>
 		</dependency>
 	</dependencies>
 

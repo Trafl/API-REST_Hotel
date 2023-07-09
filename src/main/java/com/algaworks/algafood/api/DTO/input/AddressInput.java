@@ -1,20 +1,26 @@
-package com.algaworks.algafood.api.DTO;
+package com.algaworks.algafood.api.DTO.input;
+
+import jakarta.validation.constraints.NotBlank;
 
 import lombok.Getter;
 import lombok.Setter;
 
+
 @Getter
 @Setter
-public class AddressOutput {
+public class AddressInput {
 
+	@NotBlank
 	private String cep;
 	
+	@NotBlank
 	private String numero;
 
 	private String complemento;
-
+	
+	@NotBlank
 	private String bairro;
 	
+	@NotBlank
 	private String cidade;
-	
 }

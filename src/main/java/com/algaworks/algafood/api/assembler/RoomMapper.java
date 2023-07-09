@@ -8,12 +8,12 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.algaworks.algafood.api.DTO.RoomInput;
-import com.algaworks.algafood.api.DTO.RoomOutput;
+import com.algaworks.algafood.api.DTO.input.RoomInput;
+import com.algaworks.algafood.api.DTO.output.RoomOutput;
 import com.algaworks.algafood.domain.model.Room;
 
 @Component
-public class RoomIMapper {
+public class RoomMapper {
 
 	@Autowired
 	private ModelMapper modelMapper;

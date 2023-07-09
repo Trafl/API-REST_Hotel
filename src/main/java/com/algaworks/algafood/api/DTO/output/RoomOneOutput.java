@@ -1,4 +1,4 @@
-package com.algaworks.algafood.api.DTO;
+package com.algaworks.algafood.api.DTO.output;
 
 import java.math.BigDecimal;
 
@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @Setter
 @Getter
-public class RoomOutput {
+public class RoomOneOutput {
 
 	private Integer code;
 	
@@ -15,7 +15,6 @@ public class RoomOutput {
 
 	private String descricao;
 	
-	private Boolean disponivel= true;
+	private Boolean disponivel;
 	
-	private HotelOutputId hotel;
 }

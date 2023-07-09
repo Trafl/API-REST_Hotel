@@ -19,8 +19,10 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import com.algaworks.algafood.domain.exception.BusinessException;
+import com.algaworks.algafood.domain.exception.ClientNotFoundException;
 import com.algaworks.algafood.domain.exception.EntityInUseException;
 import com.algaworks.algafood.domain.exception.HotelNotFoundException;
+import com.algaworks.algafood.domain.exception.RentNotFoundException;
 import com.algaworks.algafood.domain.exception.RoomFromHotelNotFoundException;
 import com.algaworks.algafood.domain.exception.RoomNotFoundException;
 
@@ -119,6 +121,30 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 		
 		return handleExceptionInternal(ex, body, new HttpHeaders(), status, request);
 	} 
+	
+	@ExceptionHandler(ClientNotFoundException.class)
+	public ResponseEntity<?> clientNotFoundExceptionHandler(ClientNotFoundException ex, WebRequest request){
+		
+		HttpStatus status = HttpStatus.NOT_FOUND;
+		ProblemType problemType = ProblemType.CLIENT_NOT_FOUND;
+		String detail = ex.getMessage();
+		
+		Problem body = createProblemBuilder(status, problemType, detail).build();
+		
+		return handleExceptionInternal(ex, body, new HttpHeaders(), status, request);
+	}
+	
+	@ExceptionHandler(RentNotFoundException.class)
+	public ResponseEntity<?> clientNotFoundExceptionHandler(RentNotFoundException ex, WebRequest request){
+		
+		HttpStatus status = HttpStatus.NOT_FOUND;
+		ProblemType problemType = ProblemType.RENT_NOT_FOUND;
+		String detail = ex.getMessage();
+		
+		Problem body = createProblemBuilder(status, problemType, detail).build();
+		
+		return handleExceptionInternal(ex, body, new HttpHeaders(), status, request);
+	}
 	
 	@ExceptionHandler(RoomFromHotelNotFoundException.class)
 	public ResponseEntity<?> roomFromHotelNotFoundExceptionHandler(RoomFromHotelNotFoundException ex, WebRequest request){

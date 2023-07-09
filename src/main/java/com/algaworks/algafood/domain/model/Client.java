@@ -7,10 +7,10 @@ import jakarta.persistence.Id;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-//@Data
-//@Entity
-//@EqualsAndHashCode
-public class User {
+@Data
+@Entity
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+public class Client{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,7 +19,7 @@ public class User {
 	
 	private String nome;
 	private String email;
-	private Integer celular;
-//	private formaPagamento formaPagamento;
-	
+	private String celular;
+	private String cpf;
+	private String rg;	
 }

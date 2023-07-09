@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.algaworks.algafood.api.DTO.RoomInput;
-import com.algaworks.algafood.api.DTO.RoomOutput;
-import com.algaworks.algafood.api.assembler.RoomIMapper;
+import com.algaworks.algafood.api.DTO.input.RoomInput;
+import com.algaworks.algafood.api.DTO.output.RoomOutput;
+import com.algaworks.algafood.api.assembler.RoomMapper;
 import com.algaworks.algafood.domain.model.Room;
 import com.algaworks.algafood.domain.service.RoomService;
 
@@ -29,7 +29,7 @@ public class RoomController {
 	private RoomService roomService;
 	
 	@Autowired
-	private RoomIMapper roomMapper;
+	private RoomMapper roomMapper;
 	
 	@GetMapping()
 	public List<RoomOutput> findAll() {

@@ -8,13 +8,12 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.algaworks.algafood.api.DTO.HotelInput;
-import com.algaworks.algafood.api.DTO.HotelOneOutput;
-import com.algaworks.algafood.api.DTO.HotelOutput;
+import com.algaworks.algafood.api.DTO.input.HotelInput;
+import com.algaworks.algafood.api.DTO.output.HotelOutput;
 import com.algaworks.algafood.domain.model.Hotel;
 
 @Component
-public class HotelIMapper {
+public class HotelMapper {
 
 	@Autowired
 	private ModelMapper modelMapper;
@@ -28,17 +27,16 @@ public class HotelIMapper {
 	}
 
 	//---------------------------------------------------------
+
+	
 	public HotelOutput toOutputModel(Hotel hotel) {
 		return modelMapper.map(hotel, HotelOutput.class);
 	}
 	
-	public HotelOneOutput toOneOutputModel(Hotel hotel) {
-		return modelMapper.map(hotel, HotelOneOutput.class);
-	}
-	
-	public List<HotelOutput> toCollectionInputModel (Collection<Hotel> list){
+	public List<HotelOutput> toCollectiononeOutputModel (Collection<Hotel> list){
 		return list.stream().map((modesl)-> toOutputModel(modesl)).collect(Collectors.toList());
 	}
+
 	
 	//----------------------------------------------------------
 	public void copyToDomain(HotelInput hotelInput, Hotel hotel) {	 

@@ -14,12 +14,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.algaworks.algafood.api.DTO.HotelInput;
-import com.algaworks.algafood.api.DTO.HotelOneOutput;
-import com.algaworks.algafood.api.DTO.HotelOutput;
-import com.algaworks.algafood.api.assembler.HotelIMapper;
+import com.algaworks.algafood.api.DTO.input.HotelInput;
+import com.algaworks.algafood.api.DTO.jsonview.OutPutView;
+import com.algaworks.algafood.api.DTO.output.HotelOutput;
+import com.algaworks.algafood.api.assembler.HotelMapper;
 import com.algaworks.algafood.domain.model.Hotel;
 import com.algaworks.algafood.domain.service.HotelService;
+import com.fasterxml.jackson.annotation.JsonView;
 
 import jakarta.validation.Valid;
 
@@ -31,19 +32,21 @@ public class HotelController {
 	private HotelService hotelService;
 	
 	@Autowired
-	private HotelIMapper hotelMapper;
+	private HotelMapper hotelMapper;
 	
 	@GetMapping()
+	@JsonView(OutPutView.HotelView.class)
 	public List<HotelOutput> findAll() {
-		return hotelMapper.toCollectionInputModel(hotelService.findAll()); 	
+		return hotelMapper.toCollectiononeOutputModel(hotelService.findAll()); 	
 	}
 	
 	@GetMapping(value = "/{hotelId}")
-	public HotelOneOutput findOne(@PathVariable Long hotelId) {
-		return hotelMapper.toOneOutputModel(hotelService.findOne(hotelId)); 	
+	public HotelOutput findOne(@PathVariable Long hotelId) {
+		return hotelMapper.toOutputModel(hotelService.findOne(hotelId)); 	
 	}
 	
 	@PostMapping()
+	@JsonView(OutPutView.HotelView.class)
 	@ResponseStatus(HttpStatus.CREATED)
 	public HotelOutput add(@RequestBody @Valid HotelInput hotelInput) {
 		Hotel hotel = hotelMapper.toDomainModel(hotelInput);
@@ -51,6 +54,7 @@ public class HotelController {
 	}
 	
 	@PutMapping(value = "/{hotelId}")
+	@JsonView(OutPutView.HotelView.class)
 	public HotelOutput update(@RequestBody @Valid HotelInput hotelInput, @PathVariable Long hotelId) {	
 		Hotel hotel = hotelService.findOne(hotelId);
 		hotelMapper.copyToDomain(hotelInput, hotel);

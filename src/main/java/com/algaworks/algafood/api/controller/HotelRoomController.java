@@ -9,13 +9,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.algaworks.algafood.api.DTO.RoomOutput;
-import com.algaworks.algafood.api.assembler.RoomIMapper;
+import com.algaworks.algafood.api.DTO.jsonview.OutPutView;
+import com.algaworks.algafood.api.DTO.output.RoomOutput;
+import com.algaworks.algafood.api.assembler.RoomMapper;
 import com.algaworks.algafood.domain.model.Room;
 import com.algaworks.algafood.domain.service.HotelRoomService;
+import com.fasterxml.jackson.annotation.JsonView;
 
 @RestController
 @RequestMapping(value = "hotel/{hotelId}/quarto")
@@ -25,16 +28,23 @@ public class HotelRoomController {
 	private HotelRoomService hotelRoomService;
 	
 	@Autowired 
-	private RoomIMapper roomMapper;
+	private RoomMapper roomMapper;
 	
 	@GetMapping()
-	public List<RoomOutput> findRoomsOfHotel(@PathVariable Long hotelId) {
-		List<Room> trueList = hotelRoomService.findAvailableRoom(hotelId);
+	@JsonView(OutPutView.RoomView.class)
+	public List<RoomOutput> findRoomsOfHotel(@PathVariable Long hotelId, @RequestParam(required = false) boolean alugados ) {
+		List<Room> list = null;
 		
-		return roomMapper.toCollectionOuputModel(trueList);
+		if(alugados) {
+			list = hotelRoomService.findRooms(hotelId);
+		}else
+			list = hotelRoomService.findAvailableRoom(hotelId);
+
+		return roomMapper.toCollectionOuputModel(list);
 	}
 
 	@GetMapping(value = "/{roomId}")
+	@JsonView(OutPutView.RoomView.class)
 	public RoomOutput findOneRoomOfHotel(@PathVariable Long hotelId ,@PathVariable Long roomId) {
 		return roomMapper.toOutputModel(hotelRoomService.findOneRoomFromHotel(hotelId, roomId));
 	}

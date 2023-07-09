@@ -7,8 +7,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.algaworks.algafood.api.DTO.HotelInput;
-import com.algaworks.algafood.api.assembler.HotelIMapper;
+import com.algaworks.algafood.api.DTO.input.HotelInput;
+import com.algaworks.algafood.api.assembler.HotelMapper;
 import com.algaworks.algafood.domain.exception.EntityInUseException;
 import com.algaworks.algafood.domain.exception.HotelNotFoundException;
 import com.algaworks.algafood.domain.model.Hotel;
@@ -24,7 +24,7 @@ class HoteloApplicationTests {
 	private HotelService hotelService;
 	
 	@Autowired
-	private HotelIMapper mapper;
+	private HotelMapper mapper;
 	
 	@Test()
 	public void deveTerSucesso_AoCadastrarHotel() {
