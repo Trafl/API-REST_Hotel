@@ -3,6 +3,7 @@ package com.algaworks.algafood.api.DTO.output;
 import java.math.BigDecimal;
 
 import com.algaworks.algafood.api.DTO.jsonview.OutPutView;
+import com.algaworks.algafood.domain.model.StatusType;
 import com.fasterxml.jackson.annotation.JsonView;
 
 import lombok.Getter;
@@ -22,7 +23,7 @@ public class RoomOutput {
 	private String descricao;
 	
 	@JsonView(OutPutView.RoomView.class)
-	private Boolean disponivel;
+	private StatusType status;
 	
 	private HotelOutputId hotel;
 }

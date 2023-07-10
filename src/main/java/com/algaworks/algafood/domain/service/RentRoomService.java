@@ -29,11 +29,13 @@ public class RentRoomService {
 				() -> new RentNotFoundException(rentId));
 	}
 	
-	public RentRoom findRentByClient(Long clientId) {
+	public List<RentRoom> findRentByClient(Long clientId) {
 		return rentRoomRepository.findRentByClient(clientId).orElseThrow(
 			()-> new RentNotFoundException(
 					String.format("Não tem nenhuma reserva registrada para o cliente de código %s", clientId)));
 	}
+	
+	// Metodo Get para retornar a reserva em PDF
 	
 	public List<RentRoom> findAll() {
 		return rentRoomRepository.findAll();
@@ -47,7 +49,7 @@ public class RentRoomService {
 		
 		rentRoom.setCliente(cliente);
 		rentRoom.setQuarto(quarto);
-		rentRoom.calculateTotal();		
+		rentRoom.setRent();		
 		
 		return rentRoomRepository.save(rentRoom);
 	}

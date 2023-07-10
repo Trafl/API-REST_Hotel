@@ -22,18 +22,14 @@ public class Hotel {
 	@EqualsAndHashCode.Include
 	private Long id;
 
-	
 	private String nome;
 
 	private String descricao;
 	
 	@Embedded
-	private Address endereco; //Podendo integrar com uma API de Localização 
+	private Address endereco; 
 	
-
 	@OneToMany(mappedBy = "hotel")
 	private List<Room> quartos = new ArrayList<>(); 
-	
-/* Atributos pendentes, Avaliação dos clientes, Classificação */
 	
 }

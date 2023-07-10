@@ -3,6 +3,8 @@ package com.algaworks.algafood.domain.model;
 import java.math.BigDecimal;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -27,17 +29,18 @@ public class Room {
 
 	private String descricao;
 	
-	private Boolean disponivel= true;
+	@Enumerated(EnumType.STRING)
+	private StatusType status= StatusType.DISPONIVEL;
 	
 	@ManyToOne()
 	@JoinColumn(name = "hotel_id")
 	private Hotel hotel;
 	
 	public void toHire() {
-		setDisponivel(false);
+		setStatus(StatusType.RESERVADO);
 	}
 	
 	public void toAvailable() {
-		setDisponivel(true);
+		setStatus(StatusType.DISPONIVEL);
 	}
 }

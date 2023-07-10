@@ -40,8 +40,8 @@ public class RentController {
 	}
 	
 	@GetMapping(value = "/cliente/{clientId}")
-	public RentRoomOutput findRentByClient(@PathVariable Long clientId) {
-		return rentMapper.toOutputModel(rentRoomService.findRentByClient(clientId)); 	
+	public List<RentRoomOutput> findRentsByClient(@PathVariable Long clientId) {
+		return rentMapper.toCollectionOuputModel(rentRoomService.findRentByClient(clientId)); 	
 	}
 	
 	@PostMapping()

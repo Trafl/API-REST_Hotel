@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.algaworks.algafood.domain.exception.RoomFromHotelNotFoundException;
 import com.algaworks.algafood.domain.model.Room;
+import com.algaworks.algafood.domain.model.StatusType;
 import com.algaworks.algafood.domain.repository.RoomRepository;
 
 @Service
@@ -26,7 +27,7 @@ public class HotelRoomService {
 	
 	public List<Room> findAvailableRoom(Long hotelId){
 		List<Room> listOfRooms = hotelService.findOne(hotelId).getQuartos();
-		List<Room> availableRooms = listOfRooms.stream().filter(room -> room.getDisponivel().equals(true)).toList();
+		List<Room> availableRooms = listOfRooms.stream().filter(room -> room.getStatus().equals(StatusType.DISPONIVEL)).toList();
 		
 		return availableRooms;
 	}
