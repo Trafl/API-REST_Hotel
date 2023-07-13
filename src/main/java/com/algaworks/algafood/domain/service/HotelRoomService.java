@@ -4,21 +4,22 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.algaworks.algafood.domain.exception.RoomFromHotelNotFoundException;
+import com.algaworks.algafood.domain.model.Hotel;
 import com.algaworks.algafood.domain.model.Room;
 import com.algaworks.algafood.domain.model.StatusType;
-import com.algaworks.algafood.domain.repository.RoomRepository;
+
+import jakarta.transaction.Transactional;
 
 @Service
 public class HotelRoomService {
 
 	@Autowired
-	HotelService hotelService;
+	private HotelService hotelService;
 	
 	@Autowired
-	RoomRepository roomRepository;
+	private RoomService roomService;
 	
 	public List<Room> findRooms(Long hotelId){
 		List<Room> listOfRooms = hotelService.findOne(hotelId).getQuartos();
@@ -33,19 +34,26 @@ public class HotelRoomService {
 	}
 	
 	@Transactional
-	public void rentRoom(Long hotelId, Long roomId) {
-		Room rentRoom = findOneRoomFromHotel(hotelId, roomId);
-		rentRoom.toHire();
-	}
-	
-	@Transactional
-	public void availableRoom(Long hotelId, Long roomId) {
-		Room rentRoom = findOneRoomFromHotel(hotelId, roomId);
-		rentRoom.toAvailable();
+	public Room addRoomHotel(Long hotelId, Room room) {
+		Hotel hotel = hotelService.findOne(hotelId);		
+		
+		hotel.getQuartos().add(room);
+		room.setHotel(hotel);
+		
+		roomService.add(room);
+		return room;
 	}
 	
 	public Room findOneRoomFromHotel(Long hotelId, Long roomId) {
-		return roomRepository.findOneRoomFromHotelById(hotelId, roomId).orElseThrow(
+		return roomService.findOneRoomFromHotelById(hotelId, roomId).orElseThrow(
 			 () -> new RoomFromHotelNotFoundException(roomId, hotelId));
+	}
+
+	public Room upDateRoom(Room room) {
+		return roomService.add(room);
+	}
+	
+	public void deleteRoom(Long roomId) {
+		roomService.delete(roomId);
 	}
 }

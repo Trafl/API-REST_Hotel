@@ -25,7 +25,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping(value = "/hotel")
+@RequestMapping(value = "/hoteis")
 public class HotelController {
 
 	@Autowired

@@ -1,6 +1,7 @@
 package com.algaworks.algafood.domain.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -9,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.algaworks.algafood.domain.exception.EntityInUseException;
 import com.algaworks.algafood.domain.exception.RoomNotFoundException;
-import com.algaworks.algafood.domain.model.Hotel;
 import com.algaworks.algafood.domain.model.Room;
 import com.algaworks.algafood.domain.repository.RoomRepository;
 
@@ -18,17 +18,9 @@ public class RoomService {
 
 	@Autowired
 	private RoomRepository roomRepository;
-	
-	@Autowired
-	private HotelService hotelService;
-	
+		
 	@Transactional
 	public Room add(Room room) {
-		Long hotelId = room.getHotel().getId();
-		
-		Hotel hotel = hotelService.findOne(hotelId);
-		hotel.getQuartos().add(room);
-		
 		return roomRepository.save(room);
 	}
 	
@@ -41,6 +33,10 @@ public class RoomService {
 				()-> new RoomNotFoundException(roomId));
 	}
 	
+	public Optional<Room> findOneRoomFromHotelById(Long hotelId, Long roomId) {
+		return roomRepository.findOneRoomFromHotelById(hotelId, roomId);
+	}
+	
 	@Transactional
 	public void delete (Long roomId) {
 		try {
@@ -49,7 +45,7 @@ public class RoomService {
 			roomRepository.flush();
 		}
 		catch(DataIntegrityViolationException e) {
-			throw new EntityInUseException(String.format("Hotel de codigo %s não pode ser deletado pois esta em uso", roomId));
+			throw new EntityInUseException(String.format("Quarto de codigo %s não pode ser deletado pois esta em uso", roomId));
 		}			
 	}
 }

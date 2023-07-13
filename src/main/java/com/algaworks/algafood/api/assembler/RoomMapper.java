@@ -34,6 +34,11 @@ public class RoomMapper {
 	public List<RoomOutput> toCollectionOuputModel (Collection<Room> list){
 		return list.stream().map((modesl)-> toOutputModel(modesl)).collect(Collectors.toList());
 	}
+	
+	//--------------------------------------------------------------------
+	public void copyToDomain(RoomInput RoomInput, Room room) {	 
+		modelMapper.map(RoomInput, room);
+	}
 }
 	
 

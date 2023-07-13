@@ -2,7 +2,6 @@ package com.algaworks.algafood.api.DTO.input;
 
 import java.math.BigDecimal;
 
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
@@ -22,7 +21,4 @@ public class RoomInput {
 	@NotBlank
 	private String descricao;
 	
-	@NotNull
-	@Valid
-	private HotelInputId hotel;
 }
