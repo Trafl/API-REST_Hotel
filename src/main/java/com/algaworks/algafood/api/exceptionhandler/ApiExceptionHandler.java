@@ -25,6 +25,7 @@ import com.algaworks.algafood.domain.exception.HotelNotFoundException;
 import com.algaworks.algafood.domain.exception.RentNotFoundException;
 import com.algaworks.algafood.domain.exception.RoomFromHotelNotFoundException;
 import com.algaworks.algafood.domain.exception.RoomNotFoundException;
+import com.amazonaws.AmazonClientException;
 
 @ControllerAdvice
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
@@ -157,6 +158,18 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 		
 		return handleExceptionInternal(ex, body, new HttpHeaders(), status, request);
 	} 
+	
+	@ExceptionHandler(AmazonClientException.class)
+	public ResponseEntity<?> amazonClientExceptionnHandler(AmazonClientException ex, WebRequest request){
+		
+		HttpStatus status = HttpStatus.BAD_REQUEST;
+		ProblemType problemType = ProblemType.AMAZON_S3;
+		String detail = ex.getMessage();
+		
+		Problem body = createProblemBuilder(status, problemType, detail).build();
+		
+		return handleExceptionInternal(ex, body, new HttpHeaders(), status, request);
+	}
 ////////////////////////////////////////////////////////////////////////////////////////////	
 	@Override
 	protected ResponseEntity<Object> handleExceptionInternal(Exception ex, Object body, HttpHeaders headers,

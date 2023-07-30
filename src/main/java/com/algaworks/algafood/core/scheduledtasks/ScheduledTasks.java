@@ -1,4 +1,4 @@
-package com.algaworks.algafood.domain.scheduledtasks;
+package com.algaworks.algafood.core.scheduledtasks;
 
 import java.util.List;
 import java.util.stream.Stream;
@@ -7,9 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import com.algaworks.algafood.domain.model.RentRoom;
+import com.algaworks.algafood.domain.model.Rent;
 import com.algaworks.algafood.domain.model.StatusType;
-import com.algaworks.algafood.domain.service.RentRoomService;
+import com.algaworks.algafood.domain.service.RentService;
 
 import jakarta.transaction.Transactional;
 
@@ -17,17 +17,17 @@ import jakarta.transaction.Transactional;
 public class ScheduledTasks {
 
 	@Autowired
-	private RentRoomService rentService;
+	private RentService rentService;
 	
 	@Scheduled(cron = "0 0 8 * * ?")
 	@Transactional
 	public void taks() {
-		List<RentRoom> list = rentService.findAll();
+		List<Rent> list = rentService.findAll();
 	
-		Stream<RentRoom> reservedList = list.stream().filter(reserved-> reserved.getQuarto().getStatus().equals(StatusType.RESERVADO));
+		Stream<Rent> reservedList = list.stream().filter(reserved-> reserved.getQuarto().getStatus().equals(StatusType.RESERVADO));
 		
 		reservedList.forEach(object ->{
-			object.liberarQuarto();
+			object.releaseRoom();
 		});
 	}
 }

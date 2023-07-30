@@ -13,7 +13,8 @@ public enum ProblemType {
 	ENTITY_IN_USE("Entidade em uso."),
 	BUSINESS("Violação de regra de negócio"),
 	UNREADABLE_MESSAGE("Mensagem incompreensível."),
-	INVALID_DATA("Dados invalidos.");
+	INVALID_DATA("Dados invalidos."),
+	AMAZON_S3("Erro na comunicação com a AWS");
 
 	private String title;
 	

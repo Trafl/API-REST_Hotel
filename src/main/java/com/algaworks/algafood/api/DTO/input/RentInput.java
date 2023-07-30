@@ -2,6 +2,8 @@ package com.algaworks.algafood.api.DTO.input;
 
 import java.time.OffsetDateTime;
 
+import com.algaworks.algafood.domain.model.FormPayment;
+
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -9,7 +11,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class RentRoomInput {
+public class RentInput {
 
 	@NotNull
 	private OffsetDateTime checkIn; 
@@ -26,4 +28,7 @@ public class RentRoomInput {
 	@Valid
 	@NotNull
 	private RoomInputId quarto;
+	
+	@NotNull
+	private FormPayment pagamento;
 }

@@ -30,5 +30,5 @@ insert into client (nome, email, celular, cpf, rg)
 insert into client (nome, email, celular, cpf, rg)
     values ('Mongo', 'mong@gf.com', '(00)000000000', '000.000.000-00', '00.000.000-0');
 
-insert into rent_room (check_in, check_out,  observacoes, status, valor, cliente_id, quarto_id)
-    values ('2023-07-02 11:30:00', '2023-07-04 11:34:00',  'Quarto para não fumantes', 'FECHADO', 111.00, 1, 1 );
+insert into rent (check_in, check_out,  observacoes, pagamento, status, valor, cliente_id, quarto_id)
+    values ('2023-07-02 11:30:00', '2023-07-04 11:34:00',  'Quarto para não fumantes', 'PIX', 'FECHADO', 111.00, 1, 1 );

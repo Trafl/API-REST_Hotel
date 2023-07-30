@@ -1,10 +1,15 @@
 package com.algaworks.algafood.domain.model;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.UUID;
 
+import org.springframework.data.domain.AbstractAggregateRoot;
 import org.springframework.stereotype.Component;
+
+import com.algaworks.algafood.domain.event.EmailEvent;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -18,13 +23,18 @@ import lombok.EqualsAndHashCode;
 
 @Data
 @Entity
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
 @Component
-public class RentRoom {
+public class Rent extends AbstractAggregateRoot<Rent> implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@EqualsAndHashCode.Include
 	private Long id;
+	
+	private String fileName = generateFileName();
 	
 	private OffsetDateTime checkIn; 
 	
@@ -36,6 +46,9 @@ public class RentRoom {
 	
 	@Enumerated(EnumType.STRING)
 	private StatusType status;
+	
+	@Enumerated(EnumType.STRING)
+	private FormPayment pagamento;
 	
 	@OneToOne
 	private Client cliente;
@@ -49,13 +62,18 @@ public class RentRoom {
 		setValor(result);
 		quarto.toHire();
 		setStatus(StatusType.RESERVADO);
+		registerEvent(new EmailEvent(this));
 	}
 	
-	public void liberarQuarto() {
+	public void releaseRoom() {
 		if(OffsetDateTime.now().isAfter(checkOut)) {
 			quarto.toAvailable();
 			setStatus(StatusType.FECHADO);
 		}
+	}
+	
+	public String generateFileName() {
+		return UUID.randomUUID().toString();
 	}
 }
 

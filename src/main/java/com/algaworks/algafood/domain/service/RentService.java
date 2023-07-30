@@ -1,22 +1,25 @@
 package com.algaworks.algafood.domain.service;
 
+import java.time.OffsetDateTime;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.algaworks.algafood.api.DTO.pdfDTO.RentPdfDTO;
 import com.algaworks.algafood.domain.exception.RentNotFoundException;
 import com.algaworks.algafood.domain.model.Client;
-import com.algaworks.algafood.domain.model.RentRoom;
+import com.algaworks.algafood.domain.model.Rent;
 import com.algaworks.algafood.domain.model.Room;
-import com.algaworks.algafood.domain.repository.RentRoomRepository;
+import com.algaworks.algafood.domain.repository.RentRepository;
 
 @Service
-public class RentRoomService {
+public class RentService {
 
 	@Autowired
-	private RentRoomRepository rentRoomRepository;
+	private RentRepository rentRoomRepository;
 	
 	@Autowired
 	private ClientService clientService;
@@ -24,34 +27,51 @@ public class RentRoomService {
 	@Autowired
 	private RoomService roomService;
 	
-	public RentRoom findOne(Long rentId) {
+	public Rent findOne(Long rentId) {
 		return rentRoomRepository.findById(rentId).orElseThrow(
 				() -> new RentNotFoundException(rentId));
 	}
 	
-	public List<RentRoom> findRentByClient(Long clientId) {
+	public List<Rent> findRentByClient(Long clientId) {
 		return rentRoomRepository.findRentByClient(clientId).orElseThrow(
 			()-> new RentNotFoundException(
 					String.format("Não tem nenhuma reserva registrada para o cliente de código %s", clientId)));
 	}
-	
-	// Metodo Get para retornar a reserva em PDF
-	
-	public List<RentRoom> findAll() {
+
+	public List<Rent> findAll() {
 		return rentRoomRepository.findAll();
 	}
 
 	@Transactional
-	public RentRoom add(RentRoom rentRoom) {
+	public Rent add(Rent rentRoom) {
 		
 		Client cliente = clientService.findOne(rentRoom.getCliente().getId());
 		Room quarto = roomService.findOne(rentRoom.getQuarto().getId());
 		
 		rentRoom.setCliente(cliente);
 		rentRoom.setQuarto(quarto);
-		rentRoom.setRent();		
+		rentRoom.setRent();	
 		
-		return rentRoomRepository.save(rentRoom);
+		rentRoom = rentRoomRepository.save(rentRoom);
+		
+		return rentRoom;
+	}
+	
+	public RentPdfDTO findRentForPdf(Long rentId) {
+		Rent rent = findOne(rentId);
+		
+		return 	 RentPdfDTO.builder()
+				.cliente(rent.getCliente().getNome())
+				.quarto(rent.getQuarto().getHotel().getNome())
+				.checkIn(convertOffSetForDate(rent.getCheckIn()))
+				.checkOut(convertOffSetForDate(rent.getCheckOut()))
+				.code(rent.getQuarto().getCode())
+				.valor(rent.getValor())
+				.build();
+	}
+	
+	public Date convertOffSetForDate(OffsetDateTime time) {
+		return Date.from(time.toInstant());
 	}
 }
 

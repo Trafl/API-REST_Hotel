@@ -1,13 +1,16 @@
 package com.algaworks.algafood.infrastructure.report;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.algaworks.algafood.api.DTO.pdfDTO.RentPdfDTO;
 import com.algaworks.algafood.domain.service.RentReportService;
-import com.algaworks.algafood.domain.service.RentRoomService;
+import com.algaworks.algafood.domain.service.RentService;
 
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperExportManager;
@@ -18,7 +21,7 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 public class PdfRentReportService implements RentReportService {
 
 	@Autowired
-	private RentRoomService rentService;
+	private RentService rentService;
 	
 	
 	@Override
@@ -30,9 +33,11 @@ public class PdfRentReportService implements RentReportService {
 		var parametros = new HashMap<String, Object>();
 		parametros.put("REPORT_LOCALE", new Locale("pt", "BR"));
 		
-		var rent = rentService.findRentByClient(rentId);
+		var rent = rentService.findRentForPdf(rentId);
 		
-		var dataSource = new JRBeanCollectionDataSource(rent);
+		List<RentPdfDTO> rentList = Collections.singletonList(rent);
+		
+		var dataSource = new JRBeanCollectionDataSource(rentList);
 		
 		var jasperPrint = JasperFillManager.fillReport(inputStream, parametros, dataSource);
 		

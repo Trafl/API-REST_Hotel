@@ -7,10 +7,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import com.algaworks.algafood.domain.model.RentRoom;
+import com.algaworks.algafood.domain.model.Rent;
 
-public interface RentRoomRepository extends JpaRepository<RentRoom, Long> {
+public interface RentRepository extends JpaRepository<Rent, Long> {
 
-	@Query("from RentRoom where cliente.id = :cliente ")
-	public Optional<List<RentRoom>> findRentByClient(@Param("cliente") Long clientId);
+	@Query("from Rent where cliente.id = :cliente ")
+	public Optional<List<Rent>> findRentByClient(@Param("cliente") Long clientId);
+	
+	
 }
