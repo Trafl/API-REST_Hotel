@@ -1,18 +1,22 @@
 package com.algaworks.algafood.api.controller;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.CacheControl;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,6 +31,7 @@ import com.algaworks.algafood.domain.service.RentService;
 
 import jakarta.validation.Valid;
 
+@CrossOrigin(methods = RequestMethod.GET)
 @RestController
 @RequestMapping(value = "/reservas")
 public class RentController {
@@ -44,13 +49,22 @@ public class RentController {
 	private CloudStorageService cloudStorageService;
 		
 	@GetMapping()
-	public List<RentOutput> findAll() {
-		return rentMapper.toCollectionOuputModel(rentRoomService.findAll()); 	
+	public ResponseEntity<List<RentOutput>> findAll() {
+		List<RentOutput> list = rentMapper.toCollectionOuputModel(rentRoomService.findAll()); 
+		
+		return ResponseEntity.ok()
+				.cacheControl(CacheControl.maxAge(10, TimeUnit.SECONDS))
+				.body(list);
 	}
 	
 	@GetMapping(value = "/{rentId}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public RentOutput findRent(@PathVariable Long rentId ) {
-		return rentMapper.toOutputModel(rentRoomService.findOne(rentId)); 	
+	public ResponseEntity<RentOutput> findRent(@PathVariable Long rentId ) {
+		
+		RentOutput rent = rentMapper.toOutputModel(rentRoomService.findOne(rentId)); 	
+		
+		return ResponseEntity.ok()
+				.cacheControl(CacheControl.maxAge(10, TimeUnit.SECONDS))
+				.body(rent);
 	}
 	
 	@GetMapping(value = "/{rentId}", produces = MediaType.APPLICATION_PDF_VALUE)
@@ -67,8 +81,13 @@ public class RentController {
 	}
 	
 	@GetMapping(value = "/cliente/{clientId}")
-	public List<RentOutput> findRentsByClient(@PathVariable Long clientId) {
-		return rentMapper.toCollectionOuputModel(rentRoomService.findRentByClient(clientId)); 	
+	public ResponseEntity<List<RentOutput>> findRentsByClient(@PathVariable Long clientId) {
+		
+		List<RentOutput> list = rentMapper.toCollectionOuputModel(rentRoomService.findRentByClient(clientId));
+		
+		return ResponseEntity.ok()
+				.cacheControl(CacheControl.maxAge(10, TimeUnit.SECONDS))
+				.body(list);
 	}
 	
 	@PostMapping()

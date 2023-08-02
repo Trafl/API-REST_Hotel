@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -32,7 +33,7 @@ public class Hotel {
 	private Address endereco; 
 	
 	@JsonIgnore
-	@OneToMany(mappedBy = "hotel")
+	@OneToMany(mappedBy = "hotel", fetch = FetchType.LAZY)
 	private List<Room> quartos = new ArrayList<>(); 
 	
 }
