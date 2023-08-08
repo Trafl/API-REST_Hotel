@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.pivo.hotelo.api.DTO.input.RentInput;
 import com.pivo.hotelo.api.DTO.output.RentOutput;
 import com.pivo.hotelo.api.assembler.RentMapper;
+import com.pivo.hotelo.api.controller.openapimodel.RentControllerOpenApi;
 import com.pivo.hotelo.domain.model.Rent;
 import com.pivo.hotelo.domain.service.CloudStorageService;
 import com.pivo.hotelo.domain.service.RentReportService;
@@ -34,7 +35,7 @@ import jakarta.validation.Valid;
 @CrossOrigin(methods = RequestMethod.GET)
 @RestController
 @RequestMapping(value = "/reservas")
-public class RentController {
+public class RentController implements RentControllerOpenApi {
 
 	@Autowired
 	private RentReportService rentReportService;

@@ -16,6 +16,11 @@
 	<properties>
 		<jakarta-servlet.version>5.0.0</jakarta-servlet.version>
 		<java.version>17</java.version>
+		<modelmapper.version>3.0.0</modelmapper.version>
+		<jasperreports-functions.version>6.20.1</jasperreports-functions.version>
+		<jasperreports.version>6.20.5</jasperreports.version>
+		<aws-java-sdk-s3.version>1.12.512</aws-java-sdk-s3.version>
+		<springdoc.version>2.1.0</springdoc.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -68,7 +73,7 @@
 		<dependency>
 		  <groupId>org.modelmapper</groupId>
 		  <artifactId>modelmapper</artifactId>
-		  <version>3.0.0</version>
+		  <version>${modelmapper.version}</version>
 		</dependency>
 		<dependency>
 		    <groupId>io.rest-assured</groupId>
@@ -78,17 +83,17 @@
 			<dependency>
 	    <groupId>net.sf.jasperreports</groupId>
 	    <artifactId>jasperreports-functions</artifactId>
-	    <version>6.20.1</version>
+	    <version>${jasperreports-functions.version}</version>
 	</dependency>
 		<dependency>
 	    <groupId>net.sf.jasperreports</groupId>
 	    <artifactId>jasperreports</artifactId>
-	    <version>6.20.5</version>
+	    <version>${jasperreports.version}</version>
 	</dependency>
 		<dependency>
 	    <groupId>com.amazonaws</groupId>
 	    <artifactId>aws-java-sdk-s3</artifactId>
-	    <version>1.12.512</version>
+	    <version>${aws-java-sdk-s3.version}</version>
 	</dependency>
 	  <dependency>
         <groupId>com.fasterxml.jackson.datatype</groupId>
@@ -108,7 +113,17 @@
 					spring-boot-configuration-processor
 				</artifactId>
 				<optional>true</optional>
-			</dependency>
+		</dependency>
+		<dependency>
+	      <groupId>org.springdoc</groupId>
+	      <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+	      <version>${springdoc.version}</version>
+   		</dependency>
+   		<dependency>
+	      <groupId>org.springdoc</groupId>
+	      <artifactId>springdoc-openapi-starter-webmvc-api</artifactId>
+	      <version>${springdoc.version}</version>
+	   </dependency>
 	</dependencies>
 
 	<build>

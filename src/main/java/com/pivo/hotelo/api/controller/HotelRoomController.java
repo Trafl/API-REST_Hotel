@@ -25,6 +25,7 @@ import com.pivo.hotelo.api.DTO.input.RoomInput;
 import com.pivo.hotelo.api.DTO.jsonview.OutPutView;
 import com.pivo.hotelo.api.DTO.output.RoomOutput;
 import com.pivo.hotelo.api.assembler.RoomMapper;
+import com.pivo.hotelo.api.controller.openapimodel.HotelRoomControllerOpenApi;
 import com.pivo.hotelo.domain.model.Room;
 import com.pivo.hotelo.domain.service.HotelRoomService;
 
@@ -33,7 +34,7 @@ import jakarta.validation.Valid;
 @CrossOrigin(methods = RequestMethod.GET)
 @RestController
 @RequestMapping(value = "hotel/{hotelId}/quarto")
-public class HotelRoomController {
+public class HotelRoomController implements HotelRoomControllerOpenApi {
 		
 	@Autowired
 	private HotelRoomService hotelRoomService;

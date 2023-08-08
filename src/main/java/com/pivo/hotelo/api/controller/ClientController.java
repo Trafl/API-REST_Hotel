@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.pivo.hotelo.api.DTO.input.ClientInput;
 import com.pivo.hotelo.api.DTO.output.ClientOutput;
 import com.pivo.hotelo.api.assembler.ClientMapper;
+import com.pivo.hotelo.api.controller.openapimodel.ClientControllerOpenApi;
 import com.pivo.hotelo.domain.model.Client;
 import com.pivo.hotelo.domain.service.ClientService;
 
@@ -30,7 +31,7 @@ import jakarta.validation.Valid;
 @CrossOrigin(methods = RequestMethod.GET)
 @RestController
 @RequestMapping(value = "/cliente")
-public class ClientController {
+public class ClientController implements ClientControllerOpenApi {
 
 	@Autowired
 	private ClientService clientService;

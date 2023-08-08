@@ -1,4 +1,4 @@
-package com.pivo.hotelo.core.scheduledtasks;
+package com.pivo.hotelo.domain.scheduledtasks;
 
 import java.util.List;
 import java.util.stream.Stream;
