@@ -1,9 +1,9 @@
 package com.pivo.hotelo.api.controller;
 
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.CacheControl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,17 +40,20 @@ public class ClientController implements ClientControllerOpenApi {
 	private ClientMapper clientMapper;
 	
 	@GetMapping()
-	public ResponseEntity<List<ClientOutput>> findAll() {
-		List<ClientOutput> list = clientMapper.toCollectionInputModel(clientService.findAll()); 	
+	public ResponseEntity<CollectionModel<ClientOutput>> findAll() {
+		
+		CollectionModel<ClientOutput> list = clientMapper.toCollectionModel(clientService.findAll()); 	
+		
+		CollectionModel<ClientOutput> clientOut = CollectionModel.of(list);
 		
 		return ResponseEntity.ok()
 				.cacheControl(CacheControl.maxAge(20, TimeUnit.SECONDS))
-				.body(list);
+				.body(clientOut);
 	}
 	
 	@GetMapping(value = "/{clientId}")
 	public ResponseEntity<ClientOutput> findOne(@PathVariable Long clientId) {
-		ClientOutput client = clientMapper.toOutputModel(clientService.findOne(clientId)); 	
+		ClientOutput client = clientMapper.toModel(clientService.findOne(clientId)); 	
 		
 		return ResponseEntity.ok()
 				.cacheControl(CacheControl.maxAge(20, TimeUnit.SECONDS))
@@ -61,7 +64,7 @@ public class ClientController implements ClientControllerOpenApi {
 	@ResponseStatus(HttpStatus.CREATED)
 	public ClientOutput add(@RequestBody @Valid ClientInput clientInput) {
 		Client client = clientMapper.toDomainModel(clientInput);
-		return  clientMapper.toOutputModel(clientService.add(client));
+		return  clientMapper.toModel(clientService.add(client));
 	}
 	
 	@PutMapping(value = "/{clientId}")
@@ -70,7 +73,7 @@ public class ClientController implements ClientControllerOpenApi {
 		clientMapper.copyToDomain(clientInput, client);
 		clientService.add(client);
 		
-		return clientMapper.toOutputModel(client);
+		return clientMapper.toModel(client);
 	}
 	
 	

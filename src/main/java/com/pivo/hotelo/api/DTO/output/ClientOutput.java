@@ -1,12 +1,16 @@
 package com.pivo.hotelo.api.DTO.output;
 
+import org.springframework.hateoas.RepresentationModel;
+import org.springframework.hateoas.server.core.Relation;
+
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 
+@Relation(collectionRelation = "clientes")
 @Getter
 @Setter
-public class ClientOutput {
+public class ClientOutput extends RepresentationModel<ClientOutput> {
 	
 	@Schema(example = "Alex") 
 	private String nome;

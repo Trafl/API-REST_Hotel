@@ -1,38 +1,54 @@
 package com.pivo.hotelo.api.assembler;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
 import org.springframework.stereotype.Component;
 
 import com.pivo.hotelo.api.DTO.input.RoomInput;
 import com.pivo.hotelo.api.DTO.output.RoomOutput;
+import com.pivo.hotelo.api.controller.HotelRoomController;
+import com.pivo.hotelo.api.controller.RentController;
 import com.pivo.hotelo.domain.model.Room;
 
 @Component
-public class RoomMapper {
+public class RoomMapper extends RepresentationModelAssemblerSupport<Room, RoomOutput> {
 
 	@Autowired
 	private ModelMapper modelMapper;
+	
+	public RoomMapper() {
+		super(HotelRoomController.class, RoomOutput.class);
+	}
 	
 	public Room toDomainModel(RoomInput roomInput) {
 		return modelMapper.map(roomInput, Room.class);
 	}
 	
-	public List<Room> toCollectionModel(Collection<RoomInput> list) {
+	public List<Room> toDomainCollectionModel(Collection<RoomInput> list) {
 		return list.stream().map((models) -> toDomainModel(models)).collect(Collectors.toList());
 	}
 
 	//--------------------------------------------------------------------
-	public RoomOutput toOutputModel(Room room) {
-		return modelMapper.map(room, RoomOutput.class);
+	public RoomOutput toModel(Room room) {
+	
+		RoomOutput roomModel=  modelMapper.map(room, RoomOutput.class);
+		roomModel.add(linkTo(methodOn(HotelRoomController.class).findOneRoomOfHotel(room.getHotel().getId(), room.getId())).withSelfRel());
+		roomModel.add(linkTo(RentController.class).withRel("reserva"));
+		return roomModel;
 	}
 	
-	public List<RoomOutput> toCollectionOuputModel (Collection<Room> list){
-		return list.stream().map((modesl)-> toOutputModel(modesl)).collect(Collectors.toList());
+	@Override
+	public CollectionModel<RoomOutput> toCollectionModel(Iterable<? extends Room> entities) {
+		return super.toCollectionModel(entities);
 	}
 	
 	//--------------------------------------------------------------------

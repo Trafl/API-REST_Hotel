@@ -1,7 +1,6 @@
 package com.pivo.hotelo.api.controller.openapimodel;
 
-import java.util.List;
-
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.ResponseEntity;
 
 import com.pivo.hotelo.api.DTO.input.ClientInput;
@@ -19,7 +18,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 public interface ClientControllerOpenApi {
 
 	 @Operation(summary = "Lista os clientes", description = "Lista os clientes registrados no banco de dados.")
-	 ResponseEntity<List<ClientOutput>> findAll(); 
+	 ResponseEntity<CollectionModel<ClientOutput>> findAll(); 
 	
 	
 	 @Operation(summary = "Busca um cliente por ID", description = "Busca um cliente registrado no banco de dados.",

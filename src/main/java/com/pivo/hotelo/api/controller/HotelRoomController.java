@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.CacheControl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,9 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.annotation.JsonView;
 import com.pivo.hotelo.api.DTO.input.RoomInput;
-import com.pivo.hotelo.api.DTO.jsonview.OutPutView;
 import com.pivo.hotelo.api.DTO.output.RoomOutput;
 import com.pivo.hotelo.api.assembler.RoomMapper;
 import com.pivo.hotelo.api.controller.openapimodel.HotelRoomControllerOpenApi;
@@ -43,8 +42,7 @@ public class HotelRoomController implements HotelRoomControllerOpenApi {
 	private RoomMapper roomMapper;
 	
 	@GetMapping()
-	@JsonView(OutPutView.RoomView.class)
-	public ResponseEntity<List<RoomOutput>> findRoomsOfHotel(@PathVariable Long hotelId, @RequestParam(required = false) boolean alugados ) {
+	public ResponseEntity<CollectionModel<RoomOutput>> findRoomsOfHotel(@PathVariable Long hotelId, @RequestParam(required = false) boolean alugados ) {
 		List<Room> list = null;
 		
 		if(alugados) {
@@ -52,7 +50,7 @@ public class HotelRoomController implements HotelRoomControllerOpenApi {
 		}else
 			list = hotelRoomService.findAvailableRoom(hotelId);
 
-		List<RoomOutput> listOut = roomMapper.toCollectionOuputModel(list);
+		CollectionModel<RoomOutput> listOut = roomMapper.toCollectionModel(list);
 		
 		return ResponseEntity.ok()
 				.cacheControl(CacheControl.maxAge(20, TimeUnit.SECONDS))
@@ -60,10 +58,9 @@ public class HotelRoomController implements HotelRoomControllerOpenApi {
 	}
 
 	@GetMapping(value = "/{roomId}")
-	@JsonView(OutPutView.RoomView.class)
 	public ResponseEntity<RoomOutput> findOneRoomOfHotel(@PathVariable Long hotelId ,@PathVariable Long roomId) {
 		
-		RoomOutput room = roomMapper.toOutputModel(hotelRoomService.findOneRoomFromHotel(hotelId, roomId));
+		RoomOutput room = roomMapper.toModel(hotelRoomService.findOneRoomFromHotel(hotelId, roomId));
 		
 		return ResponseEntity.ok()
 				.cacheControl(CacheControl.maxAge(20, TimeUnit.SECONDS))
@@ -75,7 +72,7 @@ public class HotelRoomController implements HotelRoomControllerOpenApi {
 	public RoomOutput addRoom(@PathVariable Long hotelId,@Valid @RequestBody RoomInput roomInput){
 		Room room = roomMapper.toDomainModel(roomInput);
 		hotelRoomService.addRoomHotel(hotelId, room);
-		return roomMapper.toOutputModel(room);
+		return roomMapper.toModel(room);
 	}
 	@PutMapping(value = "/{roomId}")
 	public RoomOutput updateRoom(@PathVariable Long hotelId, @PathVariable Long roomId, @Valid @RequestBody RoomInput roomInput) {
@@ -83,7 +80,7 @@ public class HotelRoomController implements HotelRoomControllerOpenApi {
 		
 		roomMapper.copyToDomain(roomInput, room);
 		hotelRoomService.upDateRoom(room);
-		return roomMapper.toOutputModel(room);
+		return roomMapper.toModel(room);
 	}
 	
 	@DeleteMapping(value = "/{roomId}")

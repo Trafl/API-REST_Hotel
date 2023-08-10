@@ -33,9 +33,14 @@ public class RentService {
 	}
 	
 	public List<Rent> findRentByClient(Long clientId) {
-		return rentRoomRepository.findRentByClient(clientId).orElseThrow(
-			()-> new RentNotFoundException(
-					String.format("Não tem nenhuma reserva registrada para o cliente de código %s", clientId)));
+		
+		List<Rent> rents = rentRoomRepository.findRentByClient(clientId);
+		
+		if(rents.isEmpty()) {
+			throw new RentNotFoundException(
+					String.format("Não tem nenhuma reserva registrada para o cliente de código %s", clientId));
+		}
+		return rents;
 	}
 
 	public List<Rent> findAll() {

@@ -1,7 +1,6 @@
 package com.pivo.hotelo.api.assembler;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,19 +12,18 @@ import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSuppor
 import org.springframework.stereotype.Component;
 
 import com.pivo.hotelo.api.DTO.input.HotelInput;
-import com.pivo.hotelo.api.DTO.output.HotelOutput;
+import com.pivo.hotelo.api.DTO.output.HotelSummaryOutput;
 import com.pivo.hotelo.api.controller.HotelController;
-import com.pivo.hotelo.api.controller.HotelRoomController;
 import com.pivo.hotelo.domain.model.Hotel;
 
 @Component
-public class HotelMapper extends RepresentationModelAssemblerSupport<Hotel, HotelOutput> {
+public class HotelSummaryMapper extends RepresentationModelAssemblerSupport<Hotel, HotelSummaryOutput> {
 	
 	@Autowired
 	private ModelMapper modelMapper;
 	
-	public HotelMapper() {
-		super(HotelController.class, HotelOutput.class);
+	public HotelSummaryMapper() {
+		super(HotelController.class, HotelSummaryOutput.class);
 	}
 	
 	public Hotel toDomainModel(HotelInput hotelInput) {
@@ -39,20 +37,16 @@ public class HotelMapper extends RepresentationModelAssemblerSupport<Hotel, Hote
 	//---------------------------------------------------------
 
 	
-	public HotelOutput toModel(Hotel hotel) {
-		HotelOutput hotelModel = createModelWithId(hotel.getId(), hotel);
+	public HotelSummaryOutput toModel(Hotel hotel) {
+		HotelSummaryOutput hotelSummaryModel = createModelWithId(hotel.getId(), hotel);
 		
-		modelMapper.map(hotel, hotelModel );
-	
-		hotelModel.add(linkTo(HotelController.class).withRel("hoteis"));
+		modelMapper.map(hotel, hotelSummaryModel );
 		
-		hotelModel.add(linkTo(methodOn(HotelRoomController.class).findRoomsOfHotel(hotel.getId(), false)).withRel("quartos"));
-	
-		return hotelModel;
+		return hotelSummaryModel;
 	}
 	
 	@Override
-	public CollectionModel<HotelOutput> toCollectionModel(Iterable<? extends Hotel> entities) {
+	public CollectionModel<HotelSummaryOutput> toCollectionModel(Iterable<? extends Hotel> entities) {
 		return super.toCollectionModel(entities)
 				.add(linkTo(HotelController.class).withSelfRel());
 	}

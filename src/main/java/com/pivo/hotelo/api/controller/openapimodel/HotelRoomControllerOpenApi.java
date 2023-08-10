@@ -1,7 +1,6 @@
 package com.pivo.hotelo.api.controller.openapimodel;
 
-import java.util.List;
-
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.ResponseEntity;
 
 import com.pivo.hotelo.api.DTO.input.RoomInput;
@@ -19,7 +18,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 public interface HotelRoomControllerOpenApi {
 
 	@Operation(summary = "Lista os quartos", description = "Lista os quartos registrados no banco de dados.")
-	public ResponseEntity<List<RoomOutput>> findRoomsOfHotel(@Parameter(description = "ID do hotel", example = "1") Long hotelId, 
+	public ResponseEntity<CollectionModel<RoomOutput>> findRoomsOfHotel(@Parameter(description = "ID do hotel", example = "1") Long hotelId, 
 															 @Parameter(description = "Parametro para retornar todo os quartos até os alugados", example = "true")  boolean alugados );
 
 	@Operation(summary = "Busca um quarto por ID", description = "Busca um quarto registrado no banco de dados.",
