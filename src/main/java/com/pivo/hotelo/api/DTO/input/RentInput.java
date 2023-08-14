@@ -22,7 +22,8 @@ public class RentInput {
 	@NotNull
 	private OffsetDateTime checkOut; 
 	
-	@Schema(example = "Toalhas extras(Opcional)")
+	@NotNull
+	@Schema(example = "Toalhas extras")
 	private String observacoes;
 	
 	@Valid

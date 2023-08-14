@@ -30,7 +30,7 @@ import jakarta.validation.Valid;
 
 @CrossOrigin(methods = RequestMethod.GET)
 @RestController
-@RequestMapping(value = "/cliente")
+@RequestMapping(value = "/clientes")
 public class ClientController implements ClientControllerOpenApi {
 
 	@Autowired

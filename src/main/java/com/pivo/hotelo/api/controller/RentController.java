@@ -1,9 +1,9 @@
 package com.pivo.hotelo.api.controller;
 
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.CacheControl;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -50,18 +50,21 @@ public class RentController implements RentControllerOpenApi {
 	private CloudStorageService cloudStorageService;
 		
 	@GetMapping()
-	public ResponseEntity<List<RentOutput>> findAll() {
-		List<RentOutput> list = rentMapper.toCollectionOuputModel(rentRoomService.findAll()); 
+	public ResponseEntity<CollectionModel<RentOutput>> findAll() {
+		
+		CollectionModel<RentOutput> list = rentMapper.toCollectionModel(rentRoomService.findAll()); 
+		CollectionModel<RentOutput> rentOut = CollectionModel.of(list);
+		
 		
 		return ResponseEntity.ok()
 				.cacheControl(CacheControl.maxAge(10, TimeUnit.SECONDS))
-				.body(list);
+				.body(rentOut);
 	}
 	
 	@GetMapping(value = "/{rentId}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<RentOutput> findRent(@PathVariable Long rentId ) {
 		
-		RentOutput rent = rentMapper.toOutputModel(rentRoomService.findOne(rentId)); 	
+		RentOutput rent = rentMapper.toModel(rentRoomService.findOne(rentId)); 	
 		
 		return ResponseEntity.ok()
 				.cacheControl(CacheControl.maxAge(10, TimeUnit.SECONDS))
@@ -82,13 +85,14 @@ public class RentController implements RentControllerOpenApi {
 	}
 	
 	@GetMapping(value = "/cliente/{clientId}")
-	public ResponseEntity<List<RentOutput>> findRentsByClient(@PathVariable Long clientId) {
+	public ResponseEntity<CollectionModel<RentOutput>> findRentsByClient(@PathVariable Long clientId) {
 		
-		List<RentOutput> list = rentMapper.toCollectionOuputModel(rentRoomService.findRentByClient(clientId));
+		CollectionModel<RentOutput> list = rentMapper.toCollectionModel(rentRoomService.findRentByClient(clientId));
 		
+		CollectionModel<RentOutput> rentOut = CollectionModel.of(list);
 		return ResponseEntity.ok()
 				.cacheControl(CacheControl.maxAge(10, TimeUnit.SECONDS))
-				.body(list);
+				.body(rentOut);
 	}
 	
 	@PostMapping()
@@ -100,7 +104,7 @@ public class RentController implements RentControllerOpenApi {
 			cloudStorageService.storeInCloud(rent);
 			//-----------------S3------------------
 			}
-		return rentMapper.toOutputModel(rent);
+		return rentMapper.toModel(rent);
 	}
 	
 	//-----------------S3----------------------------------------
@@ -110,7 +114,7 @@ public class RentController implements RentControllerOpenApi {
 	 	
 		Rent rent = rentRoomService.findOne(rentId);
 	 	
-		return rentMapper.toOutputModel(cloudStorageService.getObject(rent.getFileName()));
+		return rentMapper.toModel(cloudStorageService.getObject(rent.getFileName()));
 	}
 	
 	@DeleteMapping(value = "/{rentId}/s3")

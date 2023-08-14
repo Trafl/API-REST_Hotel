@@ -1,7 +1,6 @@
 package com.pivo.hotelo.api.controller.openapimodel;
 
-import java.util.List;
-
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.ResponseEntity;
 
 import com.pivo.hotelo.api.DTO.input.RentInput;
@@ -19,7 +18,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 public interface RentControllerOpenApi {
 
 	@Operation(summary = "Lista as reservas", description = "Lista as reservas registradas no banco de dados.")
-	public ResponseEntity<List<RentOutput>> findAll();
+	public ResponseEntity<CollectionModel<RentOutput>> findAll();
 
 	@Operation(summary = "Busca uma reserva por ID", description = "Busca uma reserva registrada no banco de dados e tambem pode ser gerado um PDF como comprovante.",
 			responses = {@ApiResponse(responseCode = "200", content = {
@@ -38,10 +37,15 @@ public interface RentControllerOpenApi {
 	public ResponseEntity<byte[]> findRentPdf(@Parameter(description = "ID de uma reserva", example = "1") Long rentId);
 	
 	@Operation(summary = "Busca uma reserva pelo ID do cliente", description = "Busca uma reserva registrada no banco de dados pelo ID do cliente.")
-	public ResponseEntity<List<RentOutput>> findRentsByClient(@Parameter(description = "ID de um cliente", example = "1")Long clientId);
+	public ResponseEntity<CollectionModel<RentOutput>> findRentsByClient(@Parameter(description = "ID de um cliente", example = "1")Long clientId);
+	
 	
 	@Operation(summary = "Registra uma reserva", 
-			description = "Registra uma reserva no bando de dados local e/ou na AmazonS3 é um Email de confirmação e enviado ao cliente.")
+			description = "Registra uma reserva no bando de dados local e/ou na AmazonS3 é um Email de confirmação e enviado ao cliente.",
+			responses = {@ApiResponse(responseCode = "200"),
+			  @ApiResponse(responseCode = "400", description = "Este quarto não esta disponivel.",
+		 	  content = @Content(schema = @Schema(ref = "Problema")))})
+				 	
 	public RentOutput rentThis(@RequestBody(description = "Corpo com as informações de uma nova reserva")RentInput rentInput, 
 							   @Parameter(description = "Parametro para habilitar o registro na AmazonS3", example = "true")boolean s3);
 	

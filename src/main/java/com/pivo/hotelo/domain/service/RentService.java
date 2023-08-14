@@ -9,10 +9,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.pivo.hotelo.api.DTO.pdfDTO.RentPdfDTO;
+import com.pivo.hotelo.domain.exception.BusinessException;
 import com.pivo.hotelo.domain.exception.RentNotFoundException;
 import com.pivo.hotelo.domain.model.Client;
 import com.pivo.hotelo.domain.model.Rent;
 import com.pivo.hotelo.domain.model.Room;
+import com.pivo.hotelo.domain.model.StatusType;
 import com.pivo.hotelo.domain.repository.RentRepository;
 
 @Service
@@ -52,6 +54,10 @@ public class RentService {
 		
 		Client cliente = clientService.findOne(rentRoom.getCliente().getId());
 		Room quarto = roomService.findOne(rentRoom.getQuarto().getId());
+		
+		if(quarto.getStatus().equals(StatusType.RESERVADO)) {
+			throw new BusinessException("Este quarto não esta disponivel.");
+		}
 		
 		rentRoom.setCliente(cliente);
 		rentRoom.setQuarto(quarto);

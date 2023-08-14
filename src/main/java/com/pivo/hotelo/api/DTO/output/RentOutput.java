@@ -3,7 +3,9 @@ package com.pivo.hotelo.api.DTO.output;
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
+import org.springframework.hateoas.RepresentationModel;
+import org.springframework.hateoas.server.core.Relation;
+
 import com.pivo.hotelo.domain.model.FormPayment;
 import com.pivo.hotelo.domain.model.StatusType;
 
@@ -11,10 +13,10 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 
+@Relation(collectionRelation = "reservas")
 @Setter
 @Getter
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
-public class RentOutput {
+public class RentOutput extends RepresentationModel<RentOutput> {
 
 	@Schema(example = "2023-07-08T10:00:00Z")
 	private OffsetDateTime checkIn; 

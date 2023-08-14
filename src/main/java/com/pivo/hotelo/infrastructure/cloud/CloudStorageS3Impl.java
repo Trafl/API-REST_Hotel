@@ -63,10 +63,10 @@ public class CloudStorageS3Impl implements CloudStorageService {
 		
 	public Rent getObject(String fileName) {
 		
-		String caminho = getFilePath(fileName);
+		String path = getFilePath(fileName);
 		
         try {
-            S3Object s3Object = amazonS3.getObject(storageProperties.getS3().getBucket(), caminho);
+            S3Object s3Object = amazonS3.getObject(storageProperties.getS3().getBucket(), path);
             S3ObjectInputStream objectInputStream = s3Object.getObjectContent();
 
             String jsonString = readJsonFromStream(objectInputStream);
@@ -84,11 +84,12 @@ public class CloudStorageS3Impl implements CloudStorageService {
 	public void deleteFromCloud(String fileName) {
 	try {
 		
-		String caminhoArquivo = getFilePath(fileName);
+		String path = getFilePath(fileName);
 		
-		var deleteObjectRequest = new DeleteObjectRequest(storageProperties.getS3().getBucket(), caminhoArquivo);
-		
+		var deleteObjectRequest = new DeleteObjectRequest(storageProperties.getS3().getBucket(), path);
+
 		amazonS3.deleteObject(deleteObjectRequest);
+
 		
 		}catch(AmazonServiceException e) {
 			throw new StorageCloudException("Não foi possível excluir arquivo na Amazon S3.", e);
