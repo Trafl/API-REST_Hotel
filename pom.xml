@@ -21,6 +21,7 @@
 		<jasperreports.version>6.20.5</jasperreports.version>
 		<aws-java-sdk-s3.version>1.12.512</aws-java-sdk-s3.version>
 		<springdoc.version>2.1.0</springdoc.version>
+		<dockerfile-maven-version>1.4.13</dockerfile-maven-version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -154,4 +155,33 @@
 		</plugins>
 	</build>
 
+<profiles>
+	<profile>
+		<id>docker</id>	
+		<build>
+			<plugins>
+				<plugin>
+				  <groupId>com.spotify</groupId>
+				  <artifactId>dockerfile-maven-plugin</artifactId>
+				  <version>${dockerfile-maven-version}</version>
+				  <executions>
+				    <execution>
+				      <id>default</id>
+				      <goals>
+				        <goal>build</goal>
+				        <goal>push</goal>
+				      </goals>
+				    </execution>
+				  </executions>
+				  <configuration>
+				    <repository>hotelo-api</repository>
+				    <buildArgs>
+				      <JAR_FILE>${project.build.finalName}.jar</JAR_FILE>
+				    </buildArgs>
+				  </configuration>
+				</plugin>
+			</plugins>
+		</build>
+	</profile>
+</profiles>
 </project>

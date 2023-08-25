@@ -18,8 +18,12 @@ public class Client{
 	private Long id;
 	
 	private String nome;
+	
 	private String email;
+	
 	private String celular;
+	
 	private String cpf;
+	
 	private String rg;	
 }

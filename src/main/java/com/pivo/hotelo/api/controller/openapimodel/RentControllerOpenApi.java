@@ -58,13 +58,4 @@ public interface RentControllerOpenApi {
 		})
 	public RentOutput getFromS3(@Parameter(description = "ID de uma reserva", example = "1")Long rentId );
 	
-
-	@Operation(summary = "Deleta uma reserva na AmazonS3", description = "Deleta uma reserva diretamente da AmazonS3",
-			responses = {@ApiResponse(responseCode = "204"),
-				 	  @ApiResponse(responseCode = "400", description = "ID de reserva invalido",
-				 	  content = @Content(schema = @Schema(ref = "Problema"))),
-				 	  @ApiResponse(responseCode = "404", description = "Reserva não encontrada",
-				 	  content = @Content(schema = @Schema(ref = "Problema")))
-		})
-	public void deleteFromS3(@Parameter(description = "ID de uma reserva", example = "1")Long rentId );
 }

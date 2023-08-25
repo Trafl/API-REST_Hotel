@@ -1,0 +1,35 @@
+version: "3.9"
+
+networks:
+  hotelo-network:
+    driver: bridge
+
+services:
+  hotelo-mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+    ports:
+      - "3307:3306"
+    networks:
+      - hotelo-network
+
+  hotelo-api:
+    image: hotelo-api
+    command: ["/wait-for-it.sh", "hotelo-mysql:3307", "-t", "30", "--", "java", "-jar", "hotelo.jar" ]
+    environment:
+      DB_HOST: hotelo-mysql
+    networks:
+      - hotelo-network
+    depends_on:
+      - hotelo-mysql
+      
+  hotelo-proxy:
+   build: ./nginx
+   image: hotelo-proxy
+   ports:
+    - "80:80"
+   networks:
+     - hotelo-network
+   depends_on:
+    -  hotelo-api

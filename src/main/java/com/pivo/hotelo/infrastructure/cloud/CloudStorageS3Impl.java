@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.model.S3ObjectInputStream;
@@ -79,22 +78,6 @@ public class CloudStorageS3Impl implements CloudStorageService {
         		throw new StorageCloudException("Erro ao obter o objeto do Amazon S3: ", e);
         	}
     }
-
-	@Override
-	public void deleteFromCloud(String fileName) {
-	try {
-		
-		String path = getFilePath(fileName);
-		
-		var deleteObjectRequest = new DeleteObjectRequest(storageProperties.getS3().getBucket(), path);
-
-		amazonS3.deleteObject(deleteObjectRequest);
-
-		
-		}catch(AmazonServiceException e) {
-			throw new StorageCloudException("Não foi possível excluir arquivo na Amazon S3.", e);
-		}
-	}
 		
 	private String getFilePath(String fileName) {
 		return String.format("%s/%s", storageProperties.getS3().getDirectory(), fileName);

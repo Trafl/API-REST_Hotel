@@ -8,6 +8,4 @@ public interface CloudStorageService {
 	
 	Rent getObject(String fileName);
 	
-	void deleteFromCloud(String fileName);
-	
 }
