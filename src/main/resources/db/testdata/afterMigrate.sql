@@ -1,11 +1,12 @@
 set foreign_key_checks = 0;
 
-lock tables hotel write, room write, client write, rent write;
+lock tables hotel write, room write, client write, rent write, user write;
 
 truncate table hotel;
 truncate table room;
 truncate table client;
 truncate table rent;
+truncate table user;
 
 set foreign_key_checks = 1;
 
@@ -41,5 +42,11 @@ insert into client (nome, email, celular, cpf, rg)
 
  insert into rent (check_in, check_out, pagamento, file_name, observacoes, cliente_id, quarto_id, status, valor )
  	values ('2023-07-08 10:00', '2023-07-12 10:00', 'CARTAO', '26c468d2-62f9-401f-a0ea-baab484dd8d6', "Toalhas extras", 1,3, 'RESERVADO', 2208.00);
- 	
+ 
+ insert into user (email, senha, roles) values ('pivo@email.com', '$2a$12$wABv1Jd/P5ZsYNg92/XFnOU/StX.PsmAq3ZJ5D8FUa9ZvnURTa2Uu', 'ADMIN' );
+
+ insert into user (email, senha, roles) values ('client@email.com', '$2a$12$wABv1Jd/P5ZsYNg92/XFnOU/StX.PsmAq3ZJ5D8FUa9ZvnURTa2Uu', 'CLIENT' );
+
+ insert into user (email, senha, roles) values ('hotel@email.com', '$2a$12$wABv1Jd/P5ZsYNg92/XFnOU/StX.PsmAq3ZJ5D8FUa9ZvnURTa2Uu', 'HOTEL' );
+ 
  unlock tables;

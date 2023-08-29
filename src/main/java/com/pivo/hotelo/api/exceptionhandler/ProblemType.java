@@ -14,7 +14,9 @@ public enum ProblemType {
 	BUSINESS("Violação de regra de negócio"),
 	UNREADABLE_MESSAGE("Mensagem incompreensível."),
 	INVALID_DATA("Dados invalidos."),
-	AMAZON_S3("Erro na comunicação com a AWS");
+	AMAZON_S3("Erro na comunicação com a AWS"),
+	ACCESS_DENIED("Acesso negado"),
+	JWT_INVALID("Token JWT invalido ou expirado");
 
 	private String title;
 	

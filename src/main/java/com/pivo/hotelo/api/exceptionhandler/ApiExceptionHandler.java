@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -19,6 +20,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import com.amazonaws.AmazonClientException;
+import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.pivo.hotelo.domain.exception.BusinessException;
 import com.pivo.hotelo.domain.exception.ClientNotFoundException;
 import com.pivo.hotelo.domain.exception.EntityInUseException;
@@ -170,6 +172,31 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 		
 		return handleExceptionInternal(ex, body, new HttpHeaders(), status, request);
 	}
+	
+	@ExceptionHandler(AccessDeniedException.class)
+	public ResponseEntity<?> accessDeniedExceptionHandler(AccessDeniedException ex, WebRequest request){
+		
+		HttpStatus status = HttpStatus.FORBIDDEN;
+		ProblemType problemType = ProblemType.ACCESS_DENIED;
+		String detail = ex.getMessage();
+		
+		Problem body = createProblemBuilder(status, problemType, detail).build();
+		
+		return handleExceptionInternal(ex, body, new HttpHeaders(), status, request);
+	}
+	
+	@ExceptionHandler(JWTVerificationException.class)
+	public ResponseEntity<?> jwtVerificationExceptionHandler(JWTVerificationException ex, WebRequest request){
+		
+		HttpStatus status = HttpStatus.FORBIDDEN;
+		ProblemType problemType = ProblemType.JWT_INVALID;
+		String detail = "O usuario não possui autorização para executar essa ação";
+		
+		Problem body = createProblemBuilder(status, problemType, detail).build();
+		
+		return handleExceptionInternal(ex, body, new HttpHeaders(), status, request);
+	}
+	
 ////////////////////////////////////////////////////////////////////////////////////////////	
 	@Override
 	protected ResponseEntity<Object> handleExceptionInternal(Exception ex, Object body, HttpHeaders headers,
