@@ -29,7 +29,12 @@ public class SecurityConfig {
 				
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 				
-				.and().authorizeHttpRequests().requestMatchers(HttpMethod.POST, "/login").permitAll().anyRequest().authenticated()
+				.and()
+				.authorizeHttpRequests().requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-resources/","/webjars/**" ).permitAll()
+				.and()
+				.authorizeHttpRequests().requestMatchers("/").permitAll()
+				.and()
+				.authorizeHttpRequests().requestMatchers(HttpMethod.POST, "/auth/login").permitAll().anyRequest().authenticated()
 				
 				.and().addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class)
 				.build();

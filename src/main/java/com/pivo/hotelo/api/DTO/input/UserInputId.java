@@ -7,9 +7,10 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class RoomInputId {
+public class UserInputId {
 
 	@Schema(example = "1")
 	@NotNull
 	private Long id;
+	
 }

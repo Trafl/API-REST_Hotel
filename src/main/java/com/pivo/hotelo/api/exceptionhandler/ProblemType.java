@@ -10,6 +10,7 @@ public enum ProblemType {
 	CLIENT_NOT_FOUND("Cliente não esta registrado."),
 	RENT_NOT_FOUND("Reserva não esta registrada."),
 	ROOM_HOTEL_NOT_FOUND("Quarto não registrado nesse hotel"),
+	USER_NOT_FOUND("Usuario não esta registrado"),
 	ENTITY_IN_USE("Entidade em uso."),
 	BUSINESS("Violação de regra de negócio"),
 	UNREADABLE_MESSAGE("Mensagem incompreensível."),

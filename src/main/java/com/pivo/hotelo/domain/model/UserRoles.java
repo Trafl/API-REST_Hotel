@@ -3,8 +3,7 @@ package com.pivo.hotelo.domain.model;
 public enum UserRoles {
 
 	ADMIN("admin"),
-	CLIENT("client"),
-	HOTEL("Hotel");
+	CLIENT("client");
 	
 	private String role;
 	

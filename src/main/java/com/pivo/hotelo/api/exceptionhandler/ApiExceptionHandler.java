@@ -28,6 +28,7 @@ import com.pivo.hotelo.domain.exception.HotelNotFoundException;
 import com.pivo.hotelo.domain.exception.RentNotFoundException;
 import com.pivo.hotelo.domain.exception.RoomFromHotelNotFoundException;
 import com.pivo.hotelo.domain.exception.RoomNotFoundException;
+import com.pivo.hotelo.domain.exception.UserNotFoundException;
 
 @ControllerAdvice
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
@@ -161,6 +162,18 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 		return handleExceptionInternal(ex, body, new HttpHeaders(), status, request);
 	} 
 	
+	@ExceptionHandler(UserNotFoundException.class)
+	public ResponseEntity<?> userNotFoundExceptionHandler(UserNotFoundException ex, WebRequest request){
+		
+		HttpStatus status = HttpStatus.NOT_FOUND;
+		ProblemType problemType = ProblemType.USER_NOT_FOUND;
+		String detail = ex.getMessage();
+		
+		Problem body = createProblemBuilder(status, problemType, detail).build();
+		
+		return handleExceptionInternal(ex, body, new HttpHeaders(), status, request);
+	}
+	
 	@ExceptionHandler(AmazonClientException.class)
 	public ResponseEntity<?> amazonClientExceptionnHandler(AmazonClientException ex, WebRequest request){
 		
@@ -178,7 +191,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 		
 		HttpStatus status = HttpStatus.FORBIDDEN;
 		ProblemType problemType = ProblemType.ACCESS_DENIED;
-		String detail = ex.getMessage();
+		String detail = "O usuario não possui autorização para executar essa operação";
 		
 		Problem body = createProblemBuilder(status, problemType, detail).build();
 		
@@ -190,7 +203,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 		
 		HttpStatus status = HttpStatus.FORBIDDEN;
 		ProblemType problemType = ProblemType.JWT_INVALID;
-		String detail = "O usuario não possui autorização para executar essa ação";
+		String detail = "Token JWT invalido ou expirado.";
 		
 		Problem body = createProblemBuilder(status, problemType, detail).build();
 		

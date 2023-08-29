@@ -15,9 +15,6 @@ public class ClientOutput extends RepresentationModel<ClientOutput> {
 	@Schema(example = "Alex") 
 	private String nome;
 	
-	@Schema(example = "alex@email.com") 
-	private String email;
-	
 	@Schema(example = "(00)000000000") 
 	private String celular;
 	
@@ -26,4 +23,6 @@ public class ClientOutput extends RepresentationModel<ClientOutput> {
 	
 	@Schema(example = "00.000.000-0") 
 	private String rg;	
+	
+	private UserOutput usuario;
 }

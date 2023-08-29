@@ -7,7 +7,6 @@ import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.CacheControl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,7 +40,7 @@ public class ClientController implements ClientControllerOpenApi {
 	private ClientMapper clientMapper;
 	
 	@GetMapping()
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+//	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<CollectionModel<ClientOutput>> findAll() {
 		
 		CollectionModel<ClientOutput> list = clientMapper.toCollectionModel(clientService.findAll()); 	
@@ -54,7 +53,7 @@ public class ClientController implements ClientControllerOpenApi {
 	}
 	
 	@GetMapping(value = "/{clientId}")
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+//	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<ClientOutput> findOne(@PathVariable Long clientId) {
 		ClientOutput client = clientMapper.toModel(clientService.findOne(clientId)); 	
 		
@@ -65,14 +64,14 @@ public class ClientController implements ClientControllerOpenApi {
 	
 	@PostMapping()
 	@ResponseStatus(HttpStatus.CREATED)
-	@PreAuthorize("hasRole('ROLE_CLIENT')")
+//	@PreAuthorize("hasRole('ROLE_CLIENT')")
 	public ClientOutput add(@RequestBody @Valid ClientInput clientInput) {
 		Client client = clientMapper.toDomainModel(clientInput);
 		return  clientMapper.toModel(clientService.add(client));
 	}
 	
 	@PutMapping(value = "/{clientId}")
-	@PreAuthorize("hasRole('ROLE_CLIENT')")
+//	@PreAuthorize("hasRole('ROLE_CLIENT')")
 	public ClientOutput update(@RequestBody @Valid ClientInput clientInput, @PathVariable Long clientId) {	
 		Client client = clientService.findOne(clientId);
 		clientMapper.copyToDomain(clientInput, client);
@@ -84,7 +83,7 @@ public class ClientController implements ClientControllerOpenApi {
 	
 	@DeleteMapping(value = "/{clientId}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+//	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public void delete(@PathVariable Long clientId) {
 		clientService.delete(clientId);
 	}

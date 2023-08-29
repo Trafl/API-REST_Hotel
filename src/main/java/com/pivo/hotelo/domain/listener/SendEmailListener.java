@@ -26,7 +26,7 @@ public class SendEmailListener {
 		
 		var message = Message.builder()
 				.subText(subText)
-				.addressee(event.getRent().getCliente().getEmail())
+				.addressee(event.getRent().getCliente().getUsuario().getEmail())
 				.body("rent_notification.html")
 				.variable("rent", rent)
 				.build();
