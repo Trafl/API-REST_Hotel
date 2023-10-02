@@ -1,5 +1,6 @@
 # API_Hotel
 Um sistema para cadastro de hoteis e seus respectivos clientes.
+Obs: Devido a necessidade de informações sensiveis como senha do S3 e do SES, a aplicação esta para demonstração.
 
 ## Tecnologias usadas
 Este projeto foi feito com as seguintes tecnologias:
