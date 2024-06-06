@@ -1,9 +1,8 @@
-# API_Hotel
-Um sistema para cadastro de hoteis e seus respectivos clientes.
-Obs: Devido a necessidade de informações sensiveis como senha do S3 e do SES, a aplicação esta para demonstração.
+# API-REST_Hotel
+System for hotel registration, room rental, and customer registration.
 
-## Tecnologias usadas
-Este projeto foi feito com as seguintes tecnologias:
+## Technologies used
+This project was made with the following technologies:
 - Java 17
 - Spring Boot 3.0
 - Spring Data
@@ -11,7 +10,7 @@ Este projeto foi feito com as seguintes tecnologias:
 - Spring Hateos
 - SpringDoc
 - OpenApi
-- Lombook
+- Lombok
 - FlyWay
 - ScheduledTasks
 - JasperReports
@@ -20,67 +19,73 @@ Este projeto foi feito com as seguintes tecnologias:
 - Docker
 - Docker compose
 - MySQL
-- Imagem docker do banco de dados MySQL 8.0
-- Imagem docker do SDK Eclipse-temurin:17-jre-alpine
-- Imagem docker do proxy reverso Nginx
+- Docker image of MySQL 8.0 database
+- Docker image of SDK Eclipse-temurin:17-jre-alpine
+- Docker image of Nginx reverse proxy
 
-## Requisitos
-Para rodar este projeto, é necessário ter instalados na sua máquina os seguintes programas
+## Requirements
+To run this project, you need to have the following programs installed on your machine:
 - Docker
 - Docker Compose
 
-## Como executar este projeto
-Entre na pasta do projeto, onde está o arquivo `docker-compose.yaml` e então use o seguinte comando para executar o projeto.
+## How to run this project
+Go to the project folder where the `docker-compose.yaml` file is located and then use the following command to run the project.
 
 `
 docker-compose up
 `
 
-Para subir a aplicacão com mais de uma instancia utilize:
+To run the application with more than one instance, use:
+
 
 `
 docker-compose up --scale hotelo-api=2
 `
-, nesse caso a porta que vai rodar e a 80 a porta definida para o Nginx
 
-Para parar a excução, utilize o comando:
+In this case, the port that will run is 80, the port defined for Nginx.
+
+To stop the execution, use the command:
+
 `
 Ctrl + C
 `
-ou, em outro terminal aberto no mesmo caminho:
+
+or, in another terminal open in the same path:
 ```
 docker-compose stop
 ```
-`docker-compose up` criará os containers especificados no arquivo `docker-compose.yaml` e os inicializará.
 
-Após os containers serem criados, use um programa como `Postman` ou `Insomnia` para fazer as requisições http.
-Uma vez com o Insomnia ou Postman aberto, vá até a url [http://localhost:8080/](http://localhost:8080/) para interagir com o rootpoint da api rest.
+`docker-compose up` will create the containers specified in the `docker-compose.yaml` file and initialize them.
 
-## Documentação detalhada dos EndPoins da Aplicação
-A aplicação foi documentada utilizando a especificação da OpenApi
-Apos o iniciar va ao link  -> [http://localhost:8080/swagger-ui/index.html#/](http://localhost:8080/swagger-ui/index.html#/)
+After the containers are created, use a program like `Postman` or `Insomnia` to make HTTP requests.
+Once you have Insomnia or Postman open, go to the URL [http://localhost:8080/](http://localhost:8080/) to interact with the API root endpoint.
 
-## Imagens de Exemplo
-- Adicionando um usuário novo
+## Detailed API Endpoints Documentation
+The application was documented using the OpenApi specification.
+After starting, go to the link -> [http://localhost:8080/swagger-ui/index.html#/](http://localhost:8080/swagger-ui/index.html#/)
 
-![adicionando um cliente](https://github.com/Trafl/assets/blob/main/adicionandoCliente.jpg)
+## Example Images
+- Adding a new user
 
-- Lendo um usuário 
+![adding a customer](https://github.com/Trafl/assets/blob/main/adicionandoCliente.jpg)
 
-![Lendo um cliente](https://github.com/Trafl/assets/blob/main/getCliente.jpg)
+- Reading a user
 
-- Adicionando um hotel
+![Reading a customer](https://github.com/Trafl/assets/blob/main/getCliente.jpg)
 
-![procurando](https://github.com/Trafl/assets/blob/main/postHotel.jpg)
+- Adding a hotel
 
-- Lendo um hotel
+![adding a hotel](https://github.com/Trafl/assets/blob/main/postHotel.jpg)
 
-![Lendo um hotel](https://github.com/Trafl/assets/blob/main/exemplo%20hoteis.jpg)
+- Reading a hotel
 
-- Modelo da reserva em PDF
+![Reading a hotel](https://github.com/Trafl/assets/blob/main/exemplo%20hoteis.jpg)
+
+- Reservation model in PDF
 
 ![](https://github.com/Trafl/assets/blob/main/ModeloPdf.jpg)
 
-- Reserva em Json
+- Reservation in Json
 
-![Captura de tela de 2022-08-29 18-02-26](https://github.com/Trafl/assets/blob/main/getRent.jpg)
+![Screenshot from 2022-08-29 18-02-26](https://github.com/Trafl/assets/blob/main/getRent.jpg)
+
